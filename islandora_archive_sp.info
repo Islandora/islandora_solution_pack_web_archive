@@ -1,0 +1,7 @@
+; $Id$
+name = Islandora Archive Solution Pack
+description = Islandora configurations for presisting and retrieving archive files
+dependancies[] = fedora_repository
+package = Islandora Solution Pack
+version = 11.2.0
+core = 6.x
