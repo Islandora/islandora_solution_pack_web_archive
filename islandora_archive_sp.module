@@ -14,7 +14,7 @@
 function islandora_archive_sp_required_fedora_objects() {
 
   // Add the form and associate it to the content model
-  $model_path = drupal_get_path('module', 'islandora_archive_sp');
+  $module_path = drupal_get_path('module', 'islandora_archive_sp');
   $form_name = 'Islandora Archive MODS Form';
   $form_xml = file_get_contents("$module_path/xml/mods_archive.xml");
   solution_pack_add_form($form_name, $form_xml);
