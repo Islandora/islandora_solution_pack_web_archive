@@ -10,10 +10,13 @@
     <type>application/gnutar</type>
     <type>application/x-ustar</type>
     <type>application/zip</type>
+    <type>application/x-zip</type>
     <type>application/x-bzip</type>
     <type>application/x-bzip2</type>
     <type>application/x-rar-compressed</type>
   </mimetypes>
+  <ingest_rules>
+  </ingest_rules>
   <datastreams>
     <datastream dsid="QDC">
     </datastream>
@@ -21,7 +24,7 @@
     </datastream>
   </datastreams>
   <ingest_form dsid="QDC" page="2">
-    <form_builder_method class="DemoFormBuilder" file="plugins/DemoFormBuilder.inc handler="handleQDCForm" method="buildQDCForm" module=""/>
+    <form_builder_method class="DemoFormBuilder" file="plugins/DemoFormBuilder.inc" handler="handleQDCForm" method="buildQDCForm" module=""/>
     <form_elements>
       <element label="Title Name" name="dc:title" required="true" type="textfield">
         <description>The name given to the resource</description>

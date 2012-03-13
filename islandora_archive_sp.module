@@ -45,7 +45,7 @@ function islandora_archive_sp_required_fedora_objects() {
             ),
             array(
               'dsid' => 'COLLECTION_POLICY',
-              'datasream_file' => "$module_path/xml/ARCHIVE-COLLECTION_POLICY.xml",
+              'datastream_file' => "$module_path/xml/ARCHIVE-COLLECTION_POLICY.xml",
             ),
           ),
         ),
