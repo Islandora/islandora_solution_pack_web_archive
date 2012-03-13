@@ -17,6 +17,8 @@
   <datastreams>
     <datastream dsid="QDC">
     </datastream>
+    <datastream dsid="OBJ">
+    </datastream>
   </datastreams>
   <ingest_form dsid="QDC" page="2">
     <form_builder_method class="DemoFormBuilder" file="plugins/DemoFormBuilder.inc handler="handleQDCForm" method="buildQDCForm" module=""/>
