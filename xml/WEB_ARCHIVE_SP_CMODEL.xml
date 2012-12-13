@@ -1,19 +1,8 @@
 <content_model xmlns="http://www.islandora.ca" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  name="Archive Content Model"
+  name="Web ARChive Content Model"
   xsi:schemaLocation="http://www.islandora.ca http://localhost/islandoracm.xsd">
   <mimetypes>
-    <type>application/x-tar</type>
-    <type>application/x-compressed</type>
-    <type>application/x-gtar</type>
-    <type>application/x-compressed</type>
-    <type>application/x-gzip</type>
-    <type>application/gnutar</type>
-    <type>application/x-ustar</type>
-    <type>application/zip</type>
-    <type>application/x-zip</type>
-    <type>application/x-bzip</type>
-    <type>application/x-bzip2</type>
-    <type>application/x-rar-compressed</type>
+    <type>application/warc</type>
   </mimetypes>
   <ingest_rules>
   </ingest_rules>
