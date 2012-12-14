@@ -2,11 +2,11 @@
 
 /**
  * @file
- * Islandora archive solution pack module
+ * Islandora web archive solution pack module
  */
 
 /**
- * Islandora archive sp required fedora objects
+ * Islandora web archive sp required fedora objects
  *
  * @return type
  */
@@ -29,7 +29,7 @@ function islandora_web_archive_sp_required_fedora_objects() {
           'pid' => 'islandora:sp_web_archive',
           'label' => 'Islandora Web ARCchive content model',
           'dsid' => 'ISLANDORACM',
-          'datastream_file' => "$module_path/xml/WEB_ARCHIVE_SP_CMODEL.xml",
+          'datastream_file' => "$module_path/xml/WEB_ARCHIVE-COLLECTION_POLICY.xml",
           'cmodel' => 'fedora-system:ContentModel-3.0',
         ),
         array(
@@ -40,7 +40,7 @@ function islandora_web_archive_sp_required_fedora_objects() {
           'datastreams' => array(
             array(
               'dsid' => 'TN',
-              'datastream_file' => "$module_path/images/Crystal_Clear_mimetype_tar.png",
+              'datastream_file' => "$module_path/images/Crystal_Clear_filesystem_folder_grey.png",
               'mimetype' => 'image/png',
             ),
             array(

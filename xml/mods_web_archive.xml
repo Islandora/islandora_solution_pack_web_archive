@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <definition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2">
   <properties>
     <root_name>mods</root_name>
@@ -24,10 +24,7 @@
         <properties>
           <type>file</type>
           <access>true</access>
-          <attributes>
-            <enctype>multipart/form-data</enctype>
-          </attributes>
-          <description>Select web archive file to upload.</description>
+          <description>Select warc to upload.</description>
           <required>false</required>
           <tree>true</tree>
         </properties>
@@ -61,7 +58,6 @@
             <properties>
               <type>textfield</type>
               <access>true</access>
-              <description>Title of the work.</description>
               <required>false</required>
               <title>Title</title>
               <tree>true</tree>
@@ -75,8 +71,8 @@
                   <value>title</value>
                 </create>
                 <read>
-                  <path>/mods:mods/mods:titleInfo/mods:title</path>
-                  <context>document</context>
+                  <path>mods:title</path>
+                  <context>parent</context>
                 </read>
                 <update>
                   <path>self::node()</path>
@@ -104,8 +100,8 @@
                   <value>subTitle</value>
                 </create>
                 <read>
-                  <path>/mods:mods/mods:titleInfo/mods:subTitle</path>
-                  <context>document</context>
+                  <path>mods:subTitle</path>
+                  <context>parent</context>
                 </read>
                 <update>
                   <path>self::node()</path>
@@ -155,7 +151,7 @@
                 <properties>
                   <type>select</type>
                   <access>true</access>
-                  <default_value>personal</default_value>
+                  <default_value>corporate</default_value>
                   <options>
                     <option key="corporate">corporate</option>
                     <option key="personal">personal</option>
@@ -202,8 +198,8 @@
                       <value>&lt;namePart&gt;%value%&lt;/namePart&gt;</value>
                     </create>
                     <read>
-                      <path>/mods:mods/mods:name/mods:namePart</path>
-                      <context>document</context>
+                      <path>mods:namePart</path>
+                      <context>parent</context>
                     </read>
                     <update>
                       <path>self::node()</path>
@@ -221,7 +217,7 @@
                 <properties>
                   <type>textfield</type>
                   <access>true</access>
-                  <description>Select a role from this vocabulary - &lt;a  href="http://id.loc.gov/vocabulary/relators.html"  target="_blank"&gt;http://id.loc.gov/vocabulary/relators.html&lt;/a&gt;</description>
+                  <description>Select a role from this vocabulary - http://id.loc.gov/vocabulary/relators.html - e.g. Artist, Creator, Designer, Engraver, Illustrator, Photographer, Printmaker, etc.</description>
                   <required>false</required>
                   <title>Role</title>
                   <tree>true</tree>
@@ -235,8 +231,8 @@
                       <value>&lt;role&gt;&lt;roleTerm authority="marcrelator" type="text"&gt;%value%&lt;/roleTerm&gt;&lt;/role&gt;</value>
                     </create>
                     <read>
-                      <path>/mods:mods/mods:name/mods:role/mods:roleTerm</path>
-                      <context>document</context>
+                      <path>mods:role/mods:roleTerm</path>
+                      <context>parent</context>
                     </read>
                     <update>
                       <path>self::node()</path>
@@ -258,15 +254,22 @@
         <properties>
           <type>select</type>
           <access>true</access>
-          <default_value>InteractiveResource</default_value>
+          <default_value>mixed material</default_value>
           <options>
             <option key="text">text</option>
+            <option key="cartographic">cartographic</option>
+            <option key="notated music">notated music</option>
+            <option key="sound recording">sound recording</option>
+            <option key="sound recording-musical">sound recording-musical</option>
+            <option key="sound recording-nonmusical">sound recording-nonmusical</option>
+            <option key="moving image">moving image</option>
             <option key="three dimensional object">three dimensional object</option>
             <option key="software, multimedia">software, multimedia</option>
             <option key="mixed material">mixed material</option>
             <option key="still image">still image</option>
           </options>
           <required>false</required>
+          <title>Type of Resource</title>
           <tree>true</tree>
           <actions>
             <create>
@@ -287,44 +290,11 @@
         </properties>
         <children/>
       </element>
-      <element name="tableOfContents">
-        <properties>
-          <type>textarea</type>
-          <access>true</access>
-          <description>Contents of the album, disc, etc.</description>
-          <required>false</required>
-          <title>Table of Contents</title>
-          <tree>true</tree>
-          <actions>
-            <create>
-              <path>/mods:mods</path>
-              <context>document</context>
-              <schema/>
-              <type>element</type>
-              <prefix/>
-              <value>tableOfContents</value>
-            </create>
-            <read>
-              <path>/mods:mods/mods:tableOfContents</path>
-              <context>document</context>
-            </read>
-            <update>
-              <path>self::node()</path>
-              <context>self</context>
-            </update>
-            <delete>
-              <path>self::node()</path>
-              <context>self</context>
-            </delete>
-          </actions>
-        </properties>
-        <children/>
-      </element>
       <element name="genre">
         <properties>
           <type>textfield</type>
           <access>true</access>
-          <description>A term that best describes the genre of the website.  A excellent source for terms is the Thesaurus for Graphic Materials from the Library of Congress - http://www.loc.gov/pictures/collection/tgm/</description>
+          <description>A term that best describes the genre of the image.  A excellent source for terms is the Thesaurus for Graphic Materials from the Library of Congress - http://www.loc.gov/pictures/collection/tgm/</description>
           <required>false</required>
           <title>Genre</title>
           <tree>true</tree>
@@ -333,9 +303,9 @@
               <path>/mods:mods</path>
               <context>document</context>
               <schema/>
-              <type>element</type>
+              <type>xml</type>
               <prefix/>
-              <value>genre</value>
+              <value>&lt;genre authority="lctgm"&gt;%value%&lt;/genre&gt;</value>
             </create>
             <read>
               <path>/mods:mods/mods:genre</path>
@@ -393,8 +363,8 @@
                   <value>dateIssued</value>
                 </create>
                 <read>
-                  <path>/mods:mods/mods:originInfo/mods:dateIssued</path>
-                  <context>document</context>
+                  <path>mods:dateIssued</path>
+                  <context>parent</context>
                 </read>
                 <update>
                   <path>self::node()</path>
@@ -422,7 +392,7 @@
                   <value>publisher</value>
                 </create>
                 <read>
-                  <path>/mods:mods/mods:originInfo/mods:publisher</path>
+                  <path>mods:publisher</path>
                   <context>parent</context>
                 </read>
                 <update>
@@ -448,10 +418,10 @@
                   <schema/>
                   <type>xml</type>
                   <prefix/>
-                  <value>&lt;place&gt;&lt;placeTerm authority='marccountry'&gt;%value%&lt;/placeTerm&gt;&lt;/place&gt;</value>
+                  <value>&lt;place&gt;&lt;placeTerm authority='marccountry' type='code'&gt;%value%&lt;/placeTerm&gt;&lt;/place&gt;</value>
                 </create>
                 <read>
-                  <path>/mods:mods/mods:originInfo/mods:place/mods:placeTerm[@type = 'code']</path>
+                  <path>mods:place/mods:placeTerm[@type = 'code']</path>
                   <context>parent</context>
                 </read>
                 <update>
@@ -480,7 +450,7 @@
                   <value>&lt;place&gt;&lt;placeTerm type="text"&gt;%value%&lt;/placeTerm&gt;&lt;/place&gt;</value>
                 </create>
                 <read>
-                  <path>/mods:mods/mods:originInfo/mods:place/mods:placeTerm[@type = 'text']</path>
+                  <path>mods:place/mods:placeTerm[@type = 'text']</path>
                   <context>parent</context>
                 </read>
                 <update>
@@ -498,7 +468,7 @@
         <properties>
           <type>textfield</type>
           <access>true</access>
-          <description>Select a three letter iso639-2b language code from http://www.loc.gov/standards/iso639-2/php/code_list.php</description>
+          <description>Select a three letter iso639-2b language code from &lt;a href="http://www.loc.gov/standards/iso639-2/php/code_list.php" target="_blank"&gt;http://www.loc.gov/standards/iso639-2/php/code_list.php&lt;/a&gt;</description>
           <required>false</required>
           <title>Language</title>
           <tree>true</tree>
@@ -561,7 +531,7 @@
           <type>textfield</type>
           <access>true</access>
           <required>false</required>
-          <title>Identifier</title>
+          <title>Identifier (local)</title>
           <tree>true</tree>
           <actions>
             <create>
@@ -570,10 +540,10 @@
               <schema/>
               <type>xml</type>
               <prefix/>
-              <value>&lt;identifier&gt;%value%&lt;/identifier&gt;</value>
+              <value>&lt;identifier type="local"&gt;%value%&lt;/identifier&gt;</value>
             </create>
             <read>
-              <path>/mods:mods/mods:identifier</path>
+              <path>/mods:mods/mods:identifier[@type='local']</path>
               <context>document</context>
             </read>
             <update>
@@ -614,7 +584,7 @@
             <properties>
               <type>select</type>
               <access>true</access>
-              <default_value>nonprojected graphic</default_value>
+              <default_value>electronic resource</default_value>
               <description>A designation of a particular physical presentation of a resource, including the physical form or medium of material for a resource.</description>
               <options>
                 <option key="videorecording">videorecording</option>
@@ -856,7 +826,7 @@
             <children>
               <element name="0">
                 <properties>
-                  <type>tag</type>
+                  <type>tags</type>
                   <access>true</access>
                   <required>false</required>
                   <tree>true</tree>
@@ -919,7 +889,6 @@
                 <properties>
                   <type>select</type>
                   <access>true</access>
-                  <default_value>North America</default_value>
                   <options>
                     <option key="Asia">Asia</option>
                     <option key="Africa">Africa</option>
@@ -1200,19 +1169,8 @@
         <properties>
           <type>submit</type>
           <access>true</access>
-          <required>false</required>
           <tree>true</tree>
           <value>Submit</value>
-        </properties>
-        <children/>
-      </element>
-      <element name="Ingest">
-        <properties>
-          <type>hidden</type>
-          <access>true</access>
-          <default_value>hiddenvalue</default_value>
-          <required>false</required>
-          <tree>true</tree>
         </properties>
         <children/>
       </element>
