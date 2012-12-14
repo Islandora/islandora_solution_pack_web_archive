@@ -294,7 +294,7 @@
         <properties>
           <type>textfield</type>
           <access>true</access>
-          <description>A term that best describes the genre of the image.  A excellent source for terms is the Thesaurus for Graphic Materials from the Library of Congress - http://www.loc.gov/pictures/collection/tgm/</description>
+          <description>A term that best describes the genre of the website.  A excellent source for terms is the Thesaurus for Graphic Materials from the Library of Congress - http://www.loc.gov/pictures/collection/tgm/</description>
           <required>false</required>
           <title>Genre</title>
           <tree>true</tree>
