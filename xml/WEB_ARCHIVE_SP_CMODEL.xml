@@ -6,6 +6,8 @@
   </mimetypes>
   <ingest_rules>
     <rule>
+      <applies_to>application/warc</applies_to>
+      <applies_to>application/octet-stream</applies_to>
       <ingest_methods>
         <ingest_method class="fits" dsid="TECHMD_FITS" file="plugins/fits.inc" method="extractFits" module="fedora_repository" modified_files_ext=""/>
       </ingest_methods>
