@@ -14,5 +14,5 @@ Requirements: https://github.com/internetarchive/wayback
 
 ## Todo
 
-* Provide warc download link
+* ~~Provide warc download link~~
 * Edit form to include link to local Wayback Machine
