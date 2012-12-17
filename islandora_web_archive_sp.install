@@ -1,6 +1,9 @@
 <?php
 
 /**
+ * @file
+ * Solution pack install
+ *
  * Implements hook_enable().  Re-ingests any required objects into Fedora that
  * are required by the solution pack.
  */

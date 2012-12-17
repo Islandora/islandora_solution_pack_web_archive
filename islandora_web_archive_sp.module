@@ -6,9 +6,9 @@
  */
 
 /**
- * Islandora web archive sp required fedora objects
+ * Implements hook_fedora_repository_required_fedora_objects
  *
- * @return type
+ * @return array
  */
 
 function islandora_web_archive_sp_required_fedora_objects() {
@@ -29,7 +29,7 @@ function islandora_web_archive_sp_required_fedora_objects() {
           'pid' => 'islandora:sp_web_archive',
           'label' => 'Islandora Web ARCchive content model',
           'dsid' => 'ISLANDORACM',
-          'datastream_file' => "$module_path/xml/WEB_ARCHIVE-COLLECTION_POLICY.xml",
+          'datastream_file' => "$module_path/xml/WEB_ARCHIVE_SP_CMODEL.xml",
           'cmodel' => 'fedora-system:ContentModel-3.0',
         ),
         array(
@@ -45,7 +45,7 @@ function islandora_web_archive_sp_required_fedora_objects() {
             ),
             array(
               'dsid' => 'COLLECTION_POLICY',
-              'datastream_file' => "$module_path/xml/WEB_ARCHIVE-COLLECTION_POLICY.xml",
+              'datastream_file' => "$module_path/xml/WEB_ARCHIVE_COLLECTION_POLICY.xml",
             ),
           ),
         ),
