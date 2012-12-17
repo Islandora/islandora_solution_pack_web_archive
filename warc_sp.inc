@@ -36,7 +36,7 @@ class DisplayWarcStreams {
     $title = $item->objectProfile->objLabel;
     $collection_fieldset = array(
       '#collapsible' => FALSE,
-      '#value' => '<div><a href="' . $base_url . '/fedora/repository/' . $this->pid . '/OBJ/' . $title . '.warc">Download ' . $title . '.</a></div>',
+      '#value' => '<div>Download: <a href="' . $base_url . '/fedora/repository/' . $this->pid . '/OBJ/' . $title . '.warc">' . $title . '</a>.</div>',
     );
     $tabset = array();
     $tabset['warc'] = array(
