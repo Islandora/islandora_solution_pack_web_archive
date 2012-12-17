@@ -15,4 +15,5 @@ Requirements: https://github.com/internetarchive/wayback
 ## Todo
 
 * ~~Provide warc download link~~
+* Incorporate wayback machine integration
 * Edit form to include link to local Wayback Machine
