@@ -1,7 +1,5 @@
 # Islandora Web ARChive Solution Pack
 
-*NOT READY FOR PRODUCTION*
-
 ## Description
 
 Web Archive Solution Pack for Islandora
