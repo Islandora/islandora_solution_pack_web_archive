@@ -17,6 +17,10 @@ Requirements: https://github.com/internetarchive/wayback (not required, yet!)
 1. ` cd $ISLANDORA_SITE/sites/all/modules && git clone https://github.com/ruebot/islandora_solution_pack_web_archive.git `
 2. Enable module: admin/build/modules
 
+## License
+
+GPLv3 - [Standard Islandora license](http://islandora.ca/about)
+
 ## Todo
 
 * ~~Provide warc download link~~
