@@ -41,7 +41,7 @@ If you would like to be able to full text search your warc:
 ```
 
 2. Restart the Islandora/Fedora stack
-3. Reindex Solr 'http://your.site.ca:8080/fedoragsearch/rest?operation=updateIndex'
+3. Reindex Solr http://your.site.ca:8080/fedoragsearch/rest?operation=updateIndex
 
 ## License
 
@@ -50,6 +50,7 @@ GPLv3 - [Standard Islandora license](http://islandora.ca/about)
 ## Todo
 
 * ~~Provide warc download link~~
+* Index warcs in Solr
 * Incorporate wayback machine integration
 * Drupal 7 version
 * Edit form to include link to local Wayback Machine
