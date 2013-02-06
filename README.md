@@ -21,7 +21,7 @@ If you would like to be able to full text search your warc:
 
 1. add the following to your `demoFoxmlToSolr.xslt`.
 
-```xml
+``xml
 
 <xsl:variable name="CModel">
   <xsl:value-of select="foxml:datastream[@ID='RELS-EXT']/foxml:datastreamVersion[last()]/foxml:xmlContent//fedora-model:hasModel/@rdf:resource"/>

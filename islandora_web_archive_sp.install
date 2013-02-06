@@ -2,48 +2,24 @@
 
 /**
  * @file
- * Solution pack install
- *
- * Implements hook_enable().  Re-ingests any required objects into Fedora that
- * are required by the solution pack.
+ * islandora_web_archive.install
  */
 
-function islandora_web_archive_sp_enable() {
-  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-  module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
-  if (!fedora_available()) {
-    drupal_set_message(t('Fedora instance is not currently available. Installation must be verified and completed on the Islandora Configuration page.'));
-  }
-  // Get info on the required fedora objects for this solution pack
-  else {
-    $solution_pack_info = islandora_web_archive_sp_required_fedora_objects();
+/**
+ * Implements hook_install().
+ *
+ * @see islandora_web_archive_islandora_required_objects()
+ */
 
-    // Declare an array that models an empty batch
-    $batch = array(
-      'title' => t('Installing Web ARChive Solution pack objects'),
-      'file' => drupal_get_path('module', 'fedora_repository') . '/fedora_repository.module',
-      'operations' => array(),
-    );
+function islandora_web_archive_install() {
+  module_load_include('inc', 'islandora', 'includes/solution_packs');
+  islandora_install_solution_pack('islandora_web_archive');
+}
 
-    // Iterate through the required objects, and push an operation onto the
-    // batch model to re-ingest the object if it does not exist
-    foreach ($solution_pack_info['islandora_web_archive_sp']['objects'] as $object) {
-      $item = new Fedora_Item($object['pid']);
-      if (!$item->exists()) {
-        $batch['operations'][] = array('fedora_repository_batch_reingest_object', array($object));
-      }
-    }
-
-    // If there's any operations to perform
-    if (count($batch['operations'])) {
-
-      // Add the batch to be processed
-      batch_set($batch);
-
-      // Start processing, if required
-      if (!batch_get()) {
-        batch_process();
-      }
-    }
-  }
+/**
+ * Implements hook_uninstall().
+ */
+function islandora_web_archive_uninstall() {
+  module_load_include('inc', 'islandora', 'includes/solution_packs');
+  islandora_install_solution_pack('islandora_web_archive', 'uninstall');
 }
