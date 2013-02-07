@@ -2,54 +2,249 @@
 
 /**
  * @file
- * Islandora web archive solution pack module
+ * An Islandora module to handle web archive cmodels
  */
 
 /**
- * Implements hook_fedora_repository_required_fedora_objects
+ * Implements hook_menu().
  *
- * @return array
+ * If you need to add secondary tabs to either view or manage you would create a
+ * hook_menu function similar to below.  You would also need to create an access function
+ * to tell islandora when to show your tabs.  There is an example below.
  */
 
-function islandora_web_archive_sp_required_fedora_objects() {
-  module_load_include('inc', 'fedora_repository', 'fedora_repository.solutionpacks');
-  // Add the form and associate it to the content model
-  $module_path = drupal_get_path('module', 'islandora_web_archive_sp');
-  $form_name = 'Islandora Web ARChive MODS Form';
-  $form_xml = file_get_contents("$module_path/xml/mods_web_archive.xml");
-  solution_pack_add_form($form_name, $form_xml);
-  solution_pack_add_form_association('islandora:sp_web_archive', $form_name);
+function islandora_web_archive_menu() {
+  $items = array();
+  /* example menu path
+   * $items['islandora/object/%/manage/warc'] = array(
+   * 'title' => 'Manage Warc Types',
+   * 'page callback' => 'islandora_web_archive_manage_object
+   * 'page arguments' => array(2),
+   * 'type' => MENU_LOCAL_TASK,
+   * 'access callback' => 'islandora_web_archive_access',
+   * 'access arguments' => array(2),
+   * );
+   *
+   * $items['islandora/object/%/view/warc'] = array(
+   * 'title' => 'Warc View 1',
+   * 'page callback' => 'islandora_web_archive_view1',
+   * 'page arguments' => array(2),
+   * 'type' => MENU_LOCAL_TASK,
+   * 'access callback' => 'islandora_web_archive_access',
+   * 'access arguments' => array(2),
+   * );
+   * $items['islandora/object/%/view/warc2'] = array(
+   * 'title' => 'Warc View 2',
+   * 'page callback' => 'islandora_web_archive_view2',
+   * 'page arguments' => array(2),
+   * 'type' => MENU_LOCAL_TASK,
+   * 'access callback' => 'islandora_web_archive_access',
+   * access arguments' => array(2),
+   * );
+   */
+  return $items;
+}
 
+/**
+ * Implements hook_theme().
+ *
+ * We supply a pattern so we can overide templates at the theme level if needed.
+ * We can append a pid to a template and the new template file will be called (the pids
+ * colon should be replaced with a dash)
+ * @return array
+ */
+function islandora_web_archive_theme($existing, $type, $theme, $path) {
   return array(
-    'islandora_web_archive_sp' => array(
-      'module' => 'islandora_web_archive_sp',
-      'title' => 'Islandora Web ARChive Solution Pack',
+    'islandora_web_archive' => array(
+      'template' => 'theme/islandora_web_archive',
+      /*
+       * We can add PIDs to the end of this pattern in our preprocess function
+       * and templates will be able to have have a pid appended to the
+       * template name to overide a template on a per object basis.
+       *
+       * An example template might be named
+       * "islandora-web-archive--islandora-27.tpl.php".
+       */
+      'pattern' => 'islandora_web_archive__',
+      'variable' => array('islandora_object' => NULL),
+    )
+  );
+}
+
+/**
+ * An example of adding a new managment section to the manage section of islandora.
+ * The islandora_web_archive_access function determines whether or not to show this
+ * section.
+ * This is an example function used by hook_menu above.
+ * @param string $object_id
+ * @return string
+ */
+
+/*
+ * function islandora_web_archive_manage_object($object_id){
+ * return 'Image CModel edit function '.$object_id;
+ * }
+ */
+
+/**
+ * An example function needed by this modules hook_menu
+ *
+ * @param type $object_id
+ * @return string
+ */
+
+/*
+ * function islandora_web_archive_view2($object_id){
+ * return 'Another view returned by the warc cmodel';
+ * }
+ */
+
+/**
+ * Implements hook_islandora_required_objects().
+ */
+function islandora_web_archive_islandora_required_objects(IslandoraTuque $connection) {
+  $module_path = drupal_get_path('module', 'islandora_web_archive');
+  // Web ARChive Content Model
+  $web_archive_content_model = $connection->repository->constructObject('islandora:sp_web_archive');
+  $web_archive_content_model->owner = 'fedoraAdmin';
+  $web_archive_content_model->label = 'Islandora Web ARChive Model';
+  $web_archive_content_model->models = 'fedora-system:ContentModel-3.0';
+  // ISLANDORACM Datastream
+  $datastream = $web_archive_content_model->constructDatastream('ISLANDORACM', 'X');
+  $datastream->label = 'Islandora content model';
+  $datastream->mimetype = 'text/xml';
+  $datastream->setContentFromFile("$module_path/xml/islandora_web_archive_content_model.xml", FALSE);
+  $web_archive_content_model->ingestDatastream($datastream);
+  // DS-COMPOSITE-MODEL Datastream
+  $datastream = $web_archive_content_model->constructDatastream('DS-COMPOSITE-MODEL', 'X');
+  $datastream->label = 'DS-COMPOSITE-MODEL';
+  $datastream->mimetype = 'text/xml';
+  $datastream->setContentFromFile("$module_path/xml/islandora_web_archive_ds_composite_model.xml", FALSE);
+  $web_archive_content_model->ingestDatastream($datastream);
+  // Web ARChive Collection
+  $web_archive_collection = $connection->repository->constructObject('islandora:sp_web_archive_collection');
+  $web_archive_collection->owner = 'fedoraAdmin';
+  $web_archive_collection->label = 'Web ARChive Collection';
+  $web_archive_collection->models = 'islandora:collectionCModel';
+  $web_archive_collection->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', 'islandora:root');
+  // Collection Policy Datastream
+  $datastream = $web_archive_collection->constructDatastream('COLLECTION_POLICY', 'X');
+  $datastream->label = 'Collection policy';
+  $datastream->mimetype = 'text/xml';
+  $datastream->setContentFromFile("$module_path/xml/islandora_web_archive_collection_policy.xml", FALSE);
+  $web_archive_collection->ingestDatastream($datastream);
+  // TN Datastream
+  $datastream = $web_archive_collection->constructDatastream('TN', 'M');
+  $datastream->label = 'Thumbnail';
+  $datastream->mimetype = 'image/png';
+  $datastream->setContentFromFile("$module_path/images/folder.png", FALSE);
+  $web_archive_collection->ingestDatastream($datastream);
+  return array(
+    'islandora_web_archive' => array(
+      'title' => 'Islandora Web ARChive',
       'objects' => array(
-        array(
-          'pid' => 'islandora:sp_web_archive',
-          'label' => 'Islandora Web ARCchive content model',
-          'dsid' => 'ISLANDORACM',
-          'datastream_file' => "$module_path/xml/WEB_ARCHIVE_SP_CMODEL.xml",
-          'cmodel' => 'fedora-system:ContentModel-3.0',
-        ),
-        array(
-          'pid' => 'islandora:sp_web_archive_collection',
-          'label' => 'Islandora Web ARChive Collection',
-          'cmodel' => 'islandora:collectionCModel',
-          'parent' => 'islandora:root',
-          'datastreams' => array(
-            array(
-              'dsid' => 'TN',
-              'datastream_file' => "$module_path/images/Crystal_Clear_filesystem_folder_grey.png",
-              'mimetype' => 'image/png',
-            ),
-            array(
-              'dsid' => 'COLLECTION_POLICY',
-              'datastream_file' => "$module_path/xml/WEB_ARCHIVE_COLLECTION_POLICY.xml",
-            ),
-          ),
-        ),
+        $web_archive_content_model,
+        $web_archive_collection
+      )
+    )
+  );
+}
+
+/**
+ * Implements hook_CMODEL_PID_islandora_object_ingested().
+ */
+function islandora_web_archive_islandora_sp_web_archive_islandora_object_ingested($object) {
+  module_load_include('inc', 'islandora_web_archive', 'includes/warc.process');
+}
+
+/**
+ *
+ * @global type $base_url
+ * @param array $variables
+ *  an array of variables that will be passed to the theme function
+ */
+function islandora_web_archive_preprocess_islandora_web_archive(&$variables) {
+  drupal_add_js('misc/form.js');
+  drupal_add_js('misc/collapse.js');
+  $islandora_object = $variables['islandora_object'];
+  $repository = $islandora_object->repository;
+  module_load_include('inc', 'islandora', 'includes/datastream');
+  module_load_include('inc', 'islandora', 'includes/utilities');
+
+  try {
+    $dc = $islandora_object['DC']->content;
+    $dc_object = DublinCore::import_from_xml_string($dc);
+  } catch (Exception $e) {
+    drupal_set_message(t('Error retrieving object %s %t', array('%s' => $islandora_object->id, '%t' => $e->getMessage())), 'error', FALSE);
+  }
+  $variables['islandora_dublin_core'] = isset($dc_object) ? $dc_object : NULL;
+  $variables['dc_array'] = isset($dc_object) ? $dc_object->as_formatted_array() : array();
+  $variables['islandora_object_label'] = $islandora_object->label;
+  $variables['theme_hook_suggestions'][] = 'islandora_web_archive__' . str_replace(':', '_', $islandora_object->id);
+  $variables['parent_collections'] = islandora_get_parents_from_rels_ext($islandora_object);
+  global $base_url;
+  // original
+  if (isset($islandora_object['OBJ'])) {
+    $warc_url = url("islandora/object/{$islandora_object->id}/datastream/OBJ/view", array('absolute' => TRUE));
+    $variables['islandora_warc'] = $warc_url;
+    $params = array(
+      'title' => $islandora_object->label,
+      'path' => $warc_url
+    );
+    $variables['islandora_warc'] = theme('warc', $params);
+  }
+  // thumbnail
+  if (isset($islandora_object['TN'])) {
+    $thumbnail_size_url = url("islandora/object/{$islandora_object->id}/datastream/TN/view");
+    $params = array(
+      'title' => $islandora_object->label,
+      'path' => $thumbnail_size_url
+    );
+    $variables['islandora_thumbnail_img'] = theme('image', $params);
+  }
+}
+
+/**
+ * Implements hook_islandora_content_model_forms_form_associations().
+ */
+function islandora_web_archive_islandora_content_model_forms_form_associations() {
+  return array(
+    'islandora_web_archive_mods_form' => array(
+      'content_model' => 'islandora:sp_web_archive',
+      'form_name' => 'Web ARChive MODS form',
+      'dsid' => 'MODS',
+      'title_field' => array(
+        'titleInfo', 'title'
       ),
+      'transform' => 'mods_to_dc.xsl',
+      'template' => FALSE,
+    )
+  );
+}
+
+/**
+ * Implements hook_islandora_xml_form_builder_forms().
+ */
+function islandora_web_archive_islandora_xml_form_builder_forms() {
+  $module_path = drupal_get_path('module', 'islandora_web_archive');
+  return array(
+    'Web ARChive MODS form' => array(
+      'form_file' => "$module_path/xml/islandora_web_archive_form_mods.xml",
     ),
+  );
+}
+
+/**
+ * Implements hook_islandora_ingest_steps().
+ */
+function islandora_web_archive_islandora_sp_web_archive_islandora_ingest_steps() {
+  return array(
+    'islandora_web_archive' => array(
+      'weight' => 10,
+      'type' => 'form',
+      'form_id' => 'islandora_web_archive_warc_upload_form',
+      'module' => 'islandora_web_archive',
+      'file' => 'includes/warc_upload.form.inc'
+    )
   );
 }

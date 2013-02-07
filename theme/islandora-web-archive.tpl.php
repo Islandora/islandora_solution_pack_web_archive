@@ -2,7 +2,7 @@
 
 /**
  * @file
- * This is the template file for the object page for basic image
+ * This is the template file for the object page for warcs
  *
  * @TODO: add documentation about file and available variables
  */
