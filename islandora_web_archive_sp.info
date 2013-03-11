@@ -1,6 +1,6 @@
 name = Islandora Web ARChive Solution Pack
 description = Islandora configurations for persisting and retrieving warcs
-dependancies[] = fedora_repository
+dependencies[] = fedora_repository
 package = Islandora Solution Pack
-version = 6.x-12.2.0
+version = 6.x-13.1
 core = 6.x

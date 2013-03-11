@@ -14,13 +14,13 @@ function islandora_web_archive_sp_enable() {
   if (!fedora_available()) {
     drupal_set_message(t('Fedora instance is not currently available. Installation must be verified and completed on the Islandora Configuration page.'));
   }
-  // Get info on the required fedora objects for this solution pack
   else {
-    $solution_pack_info = islandora_web_archive_sp_required_fedora_objects();
+    // Get info on the required fedora objects for this solution pack
+    $solution_pack_info = islandora_web_archive_sp_fedora_repository_required_fedora_objects();
 
     // Declare an array that models an empty batch
     $batch = array(
-      'title' => t('Installing Web ARChive Solution pack objects'),
+      'title' => t('Installing Web ARChive solution pack objects'),
       'file' => drupal_get_path('module', 'fedora_repository') . '/fedora_repository.module',
       'operations' => array(),
     );
