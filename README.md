@@ -4,11 +4,15 @@
 
 Web Archive Solution Pack for Islandora
 
-Load all required Fedora Objects, and creates empty collection object to accept web archive files.
+Adds all required Fedora objects to allow users to ingest and retrieve web archives through the Islandora interface
 
 ## Requirements
 
-Requirements: https://github.com/internetarchive/wayback (not required, yet!)
+1. [wget 1.14+](http://ftp.gnu.org/gnu/wget/)
+2. [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/) `sudo apt-get instll wkhtmltopdf`
+3. [wkhtmltoimage](http://code.google.com/p/wkhtmltopdf/downloads/detail?name=wkhtmltoimage-0.11.0_rc1-static-amd64.tar.bz2&can=2&q=) (put in path
+4. [pngcrush](http://pmt.sourceforge.net/pngcrush/) `sudo apt-get install pngcrush`
+5. [Wayback Machine](https://github.com/internetarchive/wayback) (not required, yet!)
 
 ## Installation
 
@@ -21,7 +25,7 @@ If you would like to be able to full text search your warc:
 
 1. add the following to your `demoFoxmlToSolr.xslt`.
 
-``xml
+```xml
 
 <xsl:variable name="CModel">
   <xsl:value-of select="foxml:datastream[@ID='RELS-EXT']/foxml:datastreamVersion[last()]/foxml:xmlContent//fedora-model:hasModel/@rdf:resource"/>
@@ -49,8 +53,10 @@ GPLv3 - [Standard Islandora license](http://islandora.ca/about)
 
 ## Todo
 
-* ~~Provide warc download link~~
-* Index warcs in Solr
-* Incorporate wayback machine integration
-* Drupal 7 version
-* Edit form to include link to local Wayback Machine
+- [ ] Display TN
+- [ ] Display PNG
+- [ ] Download link for warc
+- [ ] Download link for PDF
+- [ ] Solr integration (indexing warcs)
+- [ ] Wayback Machine dissemination
+- [ ] Automatic harvesting
