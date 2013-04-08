@@ -53,9 +53,9 @@ GPLv3 - [Standard Islandora license](http://islandora.ca/about)
 
 ## Todo
 
-- [ ] Display TN
-- [ ] Display PNG
-- [ ] Download link for warc
+- [x] Display TN
+- [x] Display PNG
+- [x] Download link for warc
 - [ ] Download link for PDF
 - [ ] Solr integration (indexing warcs)
 - [ ] Wayback Machine dissemination

@@ -15,8 +15,11 @@
   <dsTypeModel ID="TECHMD">
     <form MIME="text/xml"/>
   </dsTypeModel>
-  <dsTypeModel ID="TN" ORDERED="false">
-    <form MIME="image/jpg"/>
+  <dsTypeModel ID="TN" ORDERED="false" optional="true">
+    <form MIME="image/jpeg"/>
+  </dsTypeModel>
+  <dsTypeModel ID="MEDIUM_SIZE" ORDERED="false" optional="true">
+    <form MIME="image/jpeg"/>
   </dsTypeModel>
   <dsTypeModel ID="PNG" ORDERED="false">
     <form MIME="image/png"/>

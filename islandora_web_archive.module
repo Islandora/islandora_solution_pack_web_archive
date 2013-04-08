@@ -52,7 +52,7 @@ function islandora_web_archive_islandora_required_objects(IslandoraTuque $connec
   // Web ARChive Content Model
   $web_archive_content_model = $connection->repository->constructObject('islandora:sp_web_archive');
   $web_archive_content_model->owner = 'fedoraAdmin';
-  $web_archive_content_model->label = 'Islandora Web ARChive Model';
+  $web_archive_content_model->label = 'Islandora Web ARChive Content Model';
   $web_archive_content_model->models = 'fedora-system:ContentModel-3.0';
   // ISLANDORACM Datastream
   $datastream = $web_archive_content_model->constructDatastream('ISLANDORACM', 'X');

@@ -20,6 +20,10 @@
       <h2><?php print $dc_array['dc:description']['label']; ?></h2>
       <p><?php print $dc_array['dc:description']['value']; ?></p>
     <?php endif; ?>
+    <div>
+      <h2><?php print t('Download'); ?></h2>
+        <?php print $islandora_warc; ?>
+    </div>
     <?php if ($parent_collections): ?>
       <div>
         <h2><?php print t('In collections'); ?></h2>

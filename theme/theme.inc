@@ -32,6 +32,7 @@ function islandora_web_archive_preprocess_islandora_web_archive(&$variables) {
   // original
   if (isset($islandora_object['OBJ'])) {
     $warc_url = url("islandora/object/{$islandora_object->id}/datastream/OBJ/view", array('absolute' => TRUE));
+    $png_url = url("islandora/object/{$islandora_object->id}/datastream/PNG/view", array('absolute' => TRUE));
     $variables['islandora_warc'] = $warc_url;
     $params = array(
       'title' => $islandora_object->label,
@@ -48,4 +49,32 @@ function islandora_web_archive_preprocess_islandora_web_archive(&$variables) {
     );
     $variables['islandora_thumbnail_img'] = theme('image', $params);
   }
+  // Medium size.
+  if (isset($islandora_object['MEDIUM_SIZE'])) {
+    $medium_size_url = url("islandora/object/{$islandora_object->id}/datastream/MEDIUM_SIZE/view");
+    $params = array(
+      'title' => $islandora_object->label,
+      'path' => $medium_size_url,
+    );
+    $variables['islandora_medium_img'] = theme('image', $params);
+    if (isset($png_url)) {
+      $variables['islandora_content'] = l($variables['islandora_medium_img'], $png_url, array('html' => TRUE));
+    }
+    else {
+      $variables['islandora_content'] = $variables['islandora_medium_img'];
+    }
+  }
+  // Download warc
+  if (isset($islandora_object['OBJ'])) {
+    $warc_url = url("islandora/object/{$islandora_object->id}/datastream/OBJ/{$islandora_object->label}.warc", array('absolute' => TRUE));
+    $params = array(
+      'title' => $islandora_object->label,
+      'path' => $warc_url
+    );
+    $variables['islandora_warc'] = theme('warc', $params);
+    if (isset($warc_url)) {
+      $variables['islandora_warc'] = l($variables['islandora_object_label'] . '.warc', $warc_url, array('html' => TRUE));
+    }
+  }
 }
+
