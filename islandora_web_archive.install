@@ -21,5 +21,13 @@ function islandora_web_archive_install() {
  */
 function islandora_web_archive_uninstall() {
   module_load_include('inc', 'islandora', 'includes/solution_packs');
+  variable_del('islandora_web_archive_wkhtmltopdf_path');
+  variable_del('slandora_web_archive_make_wkhtmltopdf_locally');
+  variable_del('islandora_web_archive_wkhtmltoimage_path');
+  variable_del('slandora_web_archive_make_wkhtmltoimage_locally');
+  variable_del('islandora_web_archive_pngcrush_path');
+  variable_del('islandora_web_archive_make_pngcrush_locally');
+  variable_del('islandora_web_archive_wget_path');
+  variable_del('islandora_web_archive_make_warc_locally');
   islandora_install_solution_pack('islandora_web_archive', 'uninstall');
 }

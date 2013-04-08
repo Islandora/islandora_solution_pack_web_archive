@@ -1,8 +1,8 @@
 name = "Islandora Web ARChive Solution Pack"
 description = "A default Islandora module to handle web archives"
-dependancies[] = islandora
+dependencies[] = islandora
 package = Islandora
 version = 7.x-dev
 core = 7.x
-configure = admin/islandora/warc
-stylesheets[all][] = css/islandora_warc.theme.css
+configure = admin/islandora/web_archive
+stylesheets[all][] = css/islandora_web_archive.theme.css

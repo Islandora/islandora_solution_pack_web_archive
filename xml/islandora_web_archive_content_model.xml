@@ -25,6 +25,9 @@
       <display_method class="DisplayWarcStreams" file="warc_sp.inc" method="showWarcLink" module="islandora_web_archive_sp"/>
     </datastream>
     <datastream dsid="TECHMD_FITS"/>
+    <datastream dsid="TECHMD"/>
     <datastream dsid="TN"/>
+    <datastream dsid="PDF"/>
+    <datastream dsid="PNG"/>
   </datastreams>
 </content_model>
