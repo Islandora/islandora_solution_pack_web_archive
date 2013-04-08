@@ -8,11 +8,11 @@ Adds all required Fedora objects to allow users to ingest and retrieve web archi
 
 ## Requirements
 
-1. [wget 1.14+](http://ftp.gnu.org/gnu/wget/)
-2. [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/) `sudo apt-get instll wkhtmltopdf`
-3. [wkhtmltoimage](http://code.google.com/p/wkhtmltopdf/downloads/detail?name=wkhtmltoimage-0.11.0_rc1-static-amd64.tar.bz2&can=2&q=) (put in path
-4. [pngcrush](http://pmt.sourceforge.net/pngcrush/) `sudo apt-get install pngcrush`
-5. [Wayback Machine](https://github.com/internetarchive/wayback) (not required, yet!)
+1. [wget 1.14+](http://ftp.gnu.org/gnu/wget/) (**not required, yet!**)
+2. [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/) `sudo apt-get instll wkhtmltopdf` (**not required, yet!**)
+3. [wkhtmltoimage](http://code.google.com/p/wkhtmltopdf/downloads/detail?name=wkhtmltoimage-0.11.0_rc1-static-amd64.tar.bz2&can=2&q=) (put in path) (**not required, yet!**)
+4. [pngcrush](http://pmt.sourceforge.net/pngcrush/) `sudo apt-get install pngcrush` (**not required, yet!**)
+5. [Wayback Machine](https://github.com/internetarchive/wayback) (**not required, yet!**)
 
 ## Installation
 
