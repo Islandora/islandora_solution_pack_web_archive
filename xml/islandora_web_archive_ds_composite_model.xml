@@ -29,5 +29,6 @@
   </dsTypeModel>
   <dsTypeModel ID="OBJ" ORDERED="false">
     <form MIME="application/warc"/>
+    <form MIME="application/octet-stream"/>
   </dsTypeModel>
 </dsCompositeModel>

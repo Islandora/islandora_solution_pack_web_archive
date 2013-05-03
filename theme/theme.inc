@@ -50,8 +50,8 @@ function islandora_web_archive_preprocess_islandora_web_archive(&$variables) {
     $variables['islandora_thumbnail_img'] = theme('image', $params);
   }
   // Medium size.
-  if (isset($islandora_object['MEDIUM_SIZE'])) {
-    $medium_size_url = url("islandora/object/{$islandora_object->id}/datastream/MEDIUM_SIZE/view");
+  if (isset($islandora_object['JPG'])) {
+    $medium_size_url = url("islandora/object/{$islandora_object->id}/datastream/JPG/view");
     $params = array(
       'title' => $islandora_object->label,
       'path' => $medium_size_url,

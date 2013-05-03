@@ -2,13 +2,12 @@
 
 /**
  * @file
- * An Islandora module to handle web archive cmodels
+ * Hooks and callbacks for this module.
  */
 
 /**
  * Implements hook_menu().
  */
-
 function islandora_web_archive_menu() {
   $items = array();
   $items['admin/islandora/web_archive'] = array(
@@ -137,7 +136,7 @@ function islandora_web_archive_islandora_sp_web_archive_islandora_view_object($o
  * Implements hook_CMODEL_PID_islandora_object_ingested().
  */
 function islandora_web_archive_islandora_sp_web_archive_islandora_object_ingested($object) {
-  module_load_include('inc', 'islandora_video', 'includes/derivatives');
+  module_load_include('inc', 'islandora_web_archive', 'includes/derivatives');
   islandora_web_archive_create_all_derivatives($object);
 }
 
