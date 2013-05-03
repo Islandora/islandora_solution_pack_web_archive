@@ -22,7 +22,11 @@
     <?php endif; ?>
     <div>
       <h2><?php print t('Download'); ?></h2>
-        <?php print $islandora_warc; ?>
+        <ul>
+          <li>Warc: <?php print $islandora_warc; ?>
+          <li>PDF: <?php print $islandora_pdf; ?>
+          <li>Screenshot: <?php print $islandora_png; ?>
+        </ul>
     </div>
     <?php if ($parent_collections): ?>
       <div>
