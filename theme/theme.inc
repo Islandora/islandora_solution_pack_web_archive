@@ -32,8 +32,8 @@ function islandora_web_archive_preprocess_islandora_web_archive(&$variables) {
   // original
   if (isset($islandora_object['OBJ'])) {
     $warc_url = url("islandora/object/{$islandora_object->id}/datastream/OBJ/view", array('absolute' => TRUE));
-    $png_url = url("islandora/object/{$islandora_object->id}/datastream/PNG/view", array('absolute' => TRUE));
-    $pdf_url = url("islandora/object/{$islandora_object->id}/datastream/PDF/view", array('absolute' => TRUE));
+    $png_url = url("islandora/object/{$islandora_object->id}/datastream/PNG/{$islandora_object->label}", array('absolute' => TRUE));
+    $pdf_url = url("islandora/object/{$islandora_object->id}/datastream/PDF/{$islandora_object->label}", array('absolute' => TRUE));
     $variables['islandora_warc'] = $warc_url;
     $variables['islandora_pdf'] = $pdf_url;
     $variables['islandora_png'] = $png_url;
