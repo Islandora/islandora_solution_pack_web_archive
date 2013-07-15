@@ -57,4 +57,6 @@ function islandora_web_archive_upload_form_submit(array $form, array &$form_stat
   $ds->setContentFromFile($path, FALSE);
   $ds->label = $file->filename;
   $ds->mimetype = $file->filemime;
+  $ds->checksum = variable_get('islandora_checksum_enable_checksum', FALSE);
+  $ds->checksumType = variable_get('islandora_checksum_checksum_type', 'DISABLED');
 }
