@@ -1,6 +1,7 @@
 name = "Islandora Web ARChive Solution Pack"
 description = "A default Islandora module to handle web archives"
 dependencies[] = islandora
+dependencies[] = imagemagick
 package = Islandora
 version = 7.x-dev
 core = 7.x

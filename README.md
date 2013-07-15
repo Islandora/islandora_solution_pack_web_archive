@@ -56,7 +56,7 @@ GPLv3 - [Standard Islandora license](http://islandora.ca/about)
 - [x] Display TN
 - [x] Display PNG
 - [x] Download link for warc
-- [ ] Download link for PDF
+- [x] Download link for PDF
 - [ ] Solr integration (indexing warcs)
 - [ ] Wayback Machine dissemination
 - [ ] Automatic harvesting

@@ -22,7 +22,17 @@
     <?php endif; ?>
     <div>
       <h2><?php print t('Download'); ?></h2>
-        <?php print $islandora_warc; ?>
+        <ul>
+          <?php $result = drupal_http_request($islandora_warc); if(in_array($result->code, array(-1002, 200))): ?>
+            <li>Warc: <?php print $islandora_warc; ?>
+          <?php endif; ?>
+          <?php $result = drupal_http_request($islandora_pdf); if(in_array($result->code, array(-1002, 200))): ?>  
+            <li>PDF: <?php print $islandora_pdf; ?>
+          <?php endif; ?>
+          <?php $result = drupal_http_request($islandora_png); if(in_array($result->code, array(-1002, 200))): ?>
+            <li>Screenshot: <?php print $islandora_png; ?>
+          <?php endif; ?>
+        </ul>
     </div>
     <?php if ($parent_collections): ?>
       <div>
