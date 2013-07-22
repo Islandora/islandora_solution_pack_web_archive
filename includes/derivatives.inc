@@ -3,29 +3,32 @@
 /**
  * @file
  *
- * This file contains all the functions for warc manipulation used in the
+ * This file contains all the functions for screen capture manipulation used in the
  * web archive solution pack.
  */
 
 /**
  * Creates the derivatives for this content model type
  *
- * @param FedoraObject $object
+ * @param AbstractObject $object
  *  The object to add derivatives to.
+ * @param bool $force
+ *   Whether or not we should force the derivatives to be created, in the case
+ *   that they already exist on the given object.
  *
- *  @return boolean
- *    TRUE if all derivatives were created successfully, FALSE otherwise.
+ * @return boolean
+ *   TRUE if all derivatives were created successfully, FALSE otherwise.
  */
-function islandora_web_archive_create_all_derivatives(AbstractObject $object) {
+function islandora_web_archive_create_all_derivatives(AbstractObject $object, $force = TRUE) {
   if (!isset($object["PNG"])) {
-    drupal_set_message(t("Could not create derivatives for @s.  No warc file was uploaded.", array("@s" => $object->id)), "error");
+    drupal_set_message(t("Could not create derivatives for @s.  No PNG file was uploaded.", array("@s" => $object->id)), "error");
     return FALSE;
   }
   $base_name = str_replace(':', '-', $object->id);
   $uploaded_file = islandora_web_archive_get_uploaded_file($object, $base_name);
   if ($uploaded_file) {
-    $jpg = islandora_web_archive_create_JPG_derivative($object, $uploaded_file, $base_name);
-    $tn = islandora_web_archive_create_TN_derivative($object, $uploaded_file, $base_name);
+    $jpg = islandora_web_archive_create_JPG_derivative($object, $uploaded_file, $base_namei, $force = TRUE);
+    $tn = islandora_web_archive_create_TN_derivative($object, $uploaded_file, $base_name, $force = TRUE);
     return $jpg && $tn && file_unmanaged_delete($uploaded_file);
   }
   return FALSE;
@@ -34,7 +37,7 @@ function islandora_web_archive_create_all_derivatives(AbstractObject $object) {
 /**
  * Fetches the upload image file from Fedora, and saves it to a temp location.
  *
- * @param FedoraObject $object
+ * @param AbstractObject $object
  *  The object to fetch the uploaded image file from.
  * @param string $base_name
  *  The base name to use in creating temp files.
@@ -53,53 +56,65 @@ function islandora_web_archive_get_uploaded_file(AbstractObject $object, $base_n
 /**
   * Creates the JPG derived datatstream from the uploaded image file.
   *
-  * @param FedoraObject $object
+  * @param AbstractObject $object
   *   The object to add the derived datastream to.
   * @param string $uploaded_file
   *   The file path to the uploaded image file to derive from.
   * @param string $base_name
   *   The base name to use in creating temp files.
+  * @param bool $force
+  *   Whether or not we should force the derivatives to be created, in the case
+  *   that they already exist on the given object.
   *
   * @return boolean
   *   TRUE if successful, FALSE otherwise.
   */
-function islandora_web_archive_create_JPG_derivative(AbstractObject $object, $uploaded_file, $base_name) {
-  $args = array();
-  $args[] = '-resize ' . escapeshellarg("600 x 800");
-  $args[] = '-quality ' . escapeshellarg(variable_get('imagemagick_quality', 75));
-  $derivative_file = islandora_web_archive_imagemagick_convert($uploaded_file, "temporary://{$base_name}_MED.jpg", $args);
-  if ($derivative_file === FALSE) {
-    drupal_set_message(t('Failed to create JPG derivative'), 'error');
-    return FALSE;
+function islandora_web_archive_create_JPG_derivative(AbstractObject $object, $uploaded_file, $base_name, $force = TRUE) {
+  if ($force || !isset($object['JPG'])) {
+    $args = array();
+    $args[] = '-resize ' . escapeshellarg("600 x 800");
+    $args[] = '-quality ' . escapeshellarg(variable_get('imagemagick_quality', 75));
+    $derivative_file = islandora_web_archive_imagemagick_convert($uploaded_file, "temporary://{$base_name}_MED.jpg", $args);
+    if ($derivative_file === FALSE) {
+      drupal_set_message(t('Failed to create JPG derivative'), 'error');
+      return FALSE;
+    }
+    islandora_web_archive_add_datastream($object, 'JPG', $derivative_file, 'image/jpeg', t('Medium sized JPEG'));
+    return file_unmanaged_delete($derivative_file);
   }
-  islandora_web_archive_add_datastream($object, 'JPG', $derivative_file, 'image/jpeg', t('Medium sized JPEG'));
-  return file_unmanaged_delete($derivative_file);
+  return TRUE;
 }
 
 /**
   * Creates the TN derived datatstream from the uploaded image file.
   *
-  * @param FedoraObject $object
+  * @param AbstractObject $object
   *   The object to add the derived datastream to.
   * @param string $uploaded_file
   *   The file path to the uploaded image file to derive from.
   * @param string $base_name
   *   The base name to use in creating temp files.
+  * @param bool $force
+  *   Whether or not we should force the derivatives to be created, in the case
+  *   that they already exist on the given object.
   *
   * @return boolean
   *   TRUE if successful, FALSE otherwise.
   */
-function islandora_web_archive_create_TN_derivative(AbstractObject $object, $uploaded_file, $base_name) {
-  $args = array();
-  $args[] = '-quality ' . escapeshellarg(variable_get('imagemagick_quality', 75));
-  $args[] = '-resize ' . escapeshellarg("200 x 200");
-  $derivative_file = islandora_web_archive_imagemagick_convert($uploaded_file, "temporary://{$base_name}_TN.jpg", $args);
-  if ($derivative_file === FALSE) {
-    drupal_set_message(t('Failed to create TN derivative'), 'error');
-    return FALSE;
+function islandora_web_archive_create_TN_derivative(AbstractObject $object, $uploaded_file, $base_name, $force = TRUE) {
+  if ($force || !isset($object['TN'])) {
+    $args = array();
+    $args[] = '-quality ' . escapeshellarg(variable_get('imagemagick_quality', 75));
+    $args[] = '-resize ' . escapeshellarg("200 x 200");
+    $derivative_file = islandora_web_archive_imagemagick_convert($uploaded_file, "temporary://{$base_name}_TN.jpg", $args);
+    if ($derivative_file === FALSE) {
+      drupal_set_message(t('Failed to create TN derivative'), 'error');
+      return FALSE;
+    }
+    islandora_web_archive_add_datastream($object, 'TN', $derivative_file, 'image/jpeg', t('Thumbnail'));
+    return file_unmanaged_delete($derivative_file);
   }
-  islandora_web_archive_add_datastream($object, 'TN', $derivative_file, 'image/jpeg', t('Thumbnail'));
-  return file_unmanaged_delete($derivative_file);
+  return TRUE;
 }
 
 /**
