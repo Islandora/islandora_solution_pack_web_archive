@@ -16,9 +16,9 @@
  *  @return boolean
  *    TRUE if all derivatives were created successfully, FALSE otherwise.
  */
-function islandora_web_archive_create_all_derivatives(AbstractFedoraObject $object) {
-  if (!isset($object['PNG'])) {
-    drupal_set_message(t('Could not create warc derivatives for %s.  No warc file was uploaded.', array('%s' => $object->id)), 'error');
+function islandora_web_archive_create_all_derivatives(AbstractObject $object) {
+  if (!isset($object["PNG"])) {
+    drupal_set_message(t("Could not create derivatives for @s.  No warc file was uploaded.", array("@s" => $object->id)), "error");
     return FALSE;
   }
   $base_name = str_replace(':', '-', $object->id);
@@ -42,7 +42,7 @@ function islandora_web_archive_create_all_derivatives(AbstractFedoraObject $obje
  * @return string
  *  The file path to the temp file if successful, FALSE otherwise.
  */
-function islandora_web_archive_get_uploaded_file(AbstractFedoraObject $object, $base_name) {
+function islandora_web_archive_get_uploaded_file(AbstractObject $object, $base_name) {
   $mime_detector = new MimeDetect();
   $ext = $mime_detector->getExtension($object['PNG']->mimeType);
   $filename = file_create_filename("{$base_name}_PNG.{$ext}", 'temporary://');
@@ -63,7 +63,7 @@ function islandora_web_archive_get_uploaded_file(AbstractFedoraObject $object, $
   * @return boolean
   *   TRUE if successful, FALSE otherwise.
   */
-function islandora_web_archive_create_JPG_derivative(AbstractFedoraObject $object, $uploaded_file, $base_name) {
+function islandora_web_archive_create_JPG_derivative(AbstractObject $object, $uploaded_file, $base_name) {
   $args = array();
   $args[] = '-resize ' . escapeshellarg("600 x 800");
   $args[] = '-quality ' . escapeshellarg(variable_get('imagemagick_quality', 75));
@@ -89,7 +89,7 @@ function islandora_web_archive_create_JPG_derivative(AbstractFedoraObject $objec
   * @return boolean
   *   TRUE if successful, FALSE otherwise.
   */
-function islandora_web_archive_create_TN_derivative(AbstractFedoraObject $object, $uploaded_file, $base_name) {
+function islandora_web_archive_create_TN_derivative(AbstractObject $object, $uploaded_file, $base_name) {
   $args = array();
   $args[] = '-quality ' . escapeshellarg(variable_get('imagemagick_quality', 75));
   $args[] = '-resize ' . escapeshellarg("200 x 200");
@@ -157,7 +157,7 @@ function islandora_web_archive_imagemagick_convert($src, $dest, $args) {
   *
   * @TODO: could this be a generic function? eg: islandora_add_datastream($object, $dsid, $file). ?
   */
-function islandora_web_archive_add_datastream(AbstractFedoraObject $object, $dsid, $file, $mimetype, $label) {
+function islandora_web_archive_add_datastream(AbstractObject $object, $dsid, $file, $mimetype, $label) {
   $ds = $object->constructDatastream($dsid, 'M');
   $ds->label = $label;
   $ds->mimeType = $mimetype;

@@ -24,11 +24,15 @@
     <datastream dsid="OBJ">
       <display_method class="DisplayWarcStreams" file="warc_sp.inc" method="showWarcLink" module="islandora_web_archive_sp"/>
     </datastream>
-    <datastream dsid="TECHMD_FITS"/>
-    <datastream dsid="TECHMD"/>
-    <datastream dsid="TN"/>
-    <datastream dsid="MEDIUM_SIZE"/>
-    <datastream dsid="PDF"/>
-    <datastream dsid="PNG"/>
+    <datastream dsid="TECHMD_FITS" />
+    <datastream dsid="TECHMD" />
+    <datastream dsid="TN" />
+    <datastream dsid="MEDIUM_SIZE" />
+    <datastream dsid="PDF" />
+    <datastream dsid="PNG" />
+    <datastream dsid="JPG" />
+    <datastream dsid="RELS-EXT" />
+    <datastream dsid="DC" />
+    <datastream dsid="MODS" />
   </datastreams>
 </content_model>

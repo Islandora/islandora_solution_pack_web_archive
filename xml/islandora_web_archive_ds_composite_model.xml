@@ -12,23 +12,29 @@
   <dsTypeModel ID="MODS" optional="true">
     <form FORMAT_URI="http://www.loc.gov/mods/v3" MIME="text/xml"/>
   </dsTypeModel>
-  <dsTypeModel ID="TECHMD">
-    <form MIME="text/xml"/>
-  </dsTypeModel>
-  <dsTypeModel ID="TN" ORDERED="false" optional="true">
-    <form MIME="image/jpeg"/>
-  </dsTypeModel>
-  <dsTypeModel ID="MEDIUM_SIZE" ORDERED="false" optional="true">
-    <form MIME="image/jpeg"/>
-  </dsTypeModel>
-  <dsTypeModel ID="PNG" ORDERED="false">
-    <form MIME="image/png"/>
-  </dsTypeModel>
-  <dsTypeModel ID="PDF" ORDERED="false">
-    <form MIME="application/pdf"/>
-  </dsTypeModel>
-  <dsTypeModel ID="OBJ" ORDERED="false">
+  <dsTypeModel ID="OBJ" optional="false">
     <form MIME="application/warc"/>
     <form MIME="application/octet-stream"/>
+  </dsTypeModel>
+  <dsTypeModel ID="TECHMD" optional="true">
+    <form MIME="text/xml"/>
+  </dsTypeModel>
+  <dsTypeModel ID="PNG" optional="false">
+    <form MIME="image/png"/>
+  </dsTypeModel>
+  <dsTypeModel ID="PDF" optional="false">
+    <form MIME="application/pdf"/>
+  </dsTypeModel>
+  <dsTypeModel ID="TN" optional="true">
+    <form MIME="image/jpeg"/>
+    <form MIME="image/jpg"/>
+  </dsTypeModel>
+  <dsTypeModel ID="MEDIUM_SIZE" optional="true">
+    <form MIME="image/jpeg"/>
+    <form MIME="image/jpg"/>
+  </dsTypeModel>
+  <dsTypeModel ID="JPG" optional="true">
+    <form MIME="image/jpeg"/>
+    <form MIME="image/jpg"/>
   </dsTypeModel>
 </dsCompositeModel>

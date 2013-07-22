@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Hooks and callbacks for this module.
+ * Handles the creation and display of web archive objects.
  */
 
 /**
