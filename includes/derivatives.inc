@@ -27,7 +27,7 @@ function islandora_web_archive_create_all_derivatives(AbstractObject $object, $f
   $base_name = str_replace(':', '-', $object->id);
   $uploaded_file = islandora_web_archive_get_uploaded_file($object, $base_name);
   if ($uploaded_file) {
-    $jpg = islandora_web_archive_create_JPG_derivative($object, $uploaded_file, $base_namei, $force = TRUE);
+    $jpg = islandora_web_archive_create_JPG_derivative($object, $uploaded_file, $base_name, $force = TRUE);
     $tn = islandora_web_archive_create_TN_derivative($object, $uploaded_file, $base_name, $force = TRUE);
     return $jpg && $tn && file_unmanaged_delete($uploaded_file);
   }
