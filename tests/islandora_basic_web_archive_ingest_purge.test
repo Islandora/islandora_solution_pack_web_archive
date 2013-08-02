@@ -1,0 +1,86 @@
+<?php
+
+/**
+ * @file
+ * Attempts to ingest warc into a randomly generated web archive collection
+ */
+
+class IslandoraWebArchiveIngestTestCase extends IslandoraCollectionWebTestCase {
+
+  /**
+   * Get test information.
+   *
+   * @see IslandoraWebTestCase::getInfo()
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'Web Archive Ingest/Purge',
+      'description' => 'Ingests and purges a warc from a randomly generated web archive collection',
+      'group' => 'Islandora Web Archive',
+    );
+  }
+
+  /**
+   * Set up the test environment.
+   *
+   * @see IslandoraWebTestCase::setUp()
+   */
+  public function setUp() {
+    parent::setUp(array(
+      'islandora',
+      'islandora_web_archive',
+      'islandora_basic_collection',
+    ));
+  }
+
+  /**
+   * Creates an administrative user and attempts to ingest a test warc.
+   */
+  public function testIngestPurgeBasicImage() {
+    $user = $this->drupalCreateUser(array(
+      'view fedora repository objects',
+      'ingest fedora objects',
+      'administer site configuration',
+      'manage object properties',
+      'delete fedora objects and datastreams',
+      'create child collection',
+    ));
+    $this->drupalLogin($user);
+
+    $label = $this->randomName(16);
+    $suffix = $this->randomName(16);
+    $collectionpid = 'islandora:' . $suffix;
+    $this->createTestCollection($label, 'islandora:sp_web_archive', $collectionpid);
+
+    // Attempts to create an object.
+    $path = 'islandora/object/' . $collectionpid . '/manage/overview/ingest';
+    $edit = array();
+    $file = drupal_get_path('module', 'islandora_web_archive') . '/tests/fixtures/test.warc';
+    $edit['files[file]'] = $file;
+    $this->drupalPost($path, $edit, t('Ingest'));
+    $this->assertText('New Object', 'WARC object was created', 'Islandora');
+    $path = $this->url;
+    $warcpath = $path . '/datastream/OBJ/view';
+    $this->assertLinkByHref($warcpath, 0, t('Ingested warc found on view page'), t('Islandora'));
+
+    // Determines whether or not the appropriate datastreams were created.
+    $object = $this->getObjectFromPath($this->url);
+    $datastreams = array(
+      'RELS-EXT',
+      'DC',
+      'OBJ',
+      'TN',
+      'JPG',
+      'PDF',
+    );
+    $this->assertDatastreams($object, $datastreams);
+    // @TODO: This is commented out for now as this assert function does not
+    // exist as of current. However, the web archive tests need to be updated
+    // so the slew of QA Dan's test can be merged.
+    // $this->assertImageDatastreams($object, $datastreams)
+    //
+    // Attempts to delete the object and then collection.
+    $this->deleteObject($object->id);
+    $this->deleteTestCollection($collectionpid);
+  }
+}
