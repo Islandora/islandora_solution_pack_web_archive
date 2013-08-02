@@ -8,7 +8,6 @@
 /**
  * Implements hook_install().
  */
-
 function islandora_web_archive_install() {
   module_load_include('inc', 'islandora', 'includes/solution_packs');
   islandora_install_solution_pack('islandora_web_archive');

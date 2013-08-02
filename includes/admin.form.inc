@@ -5,7 +5,7 @@
  */
 
 /**
- * Islandora video administration settings
+ * Islandora video administration settings.
  *
  * @param array $form
  *   The form definition.
@@ -95,15 +95,15 @@ function islandora_web_archive_admin($form, &$form_state) {
 function islandora_web_archive_admin_submit($form, &$form_state) {
   $op = $form_state['clicked_button']['#id'];
   switch ($op) {
-  case 'edit-reset':
-    variable_del('islandora_web_archive_wkhtmltopdf_path');
-    variable_del('slandora_web_archive_make_wkhtmltopdf_locally');
-    variable_del('islandora_web_archive_wkhtmltoimage_path');
-    variable_del('slandora_web_archive_make_wkhtmltoimage_locally');
-    variable_del('islandora_web_archive_pngcrush_path');
-    variable_del('islandora_web_archive_make_pngcrush_locally');
-    variable_del('islandora_web_archive_wget_path');
-    variable_del('islandora_web_archive_make_warc_locally');
+    case 'edit-reset':
+      variable_del('islandora_web_archive_wkhtmltopdf_path');
+      variable_del('slandora_web_archive_make_wkhtmltopdf_locally');
+      variable_del('islandora_web_archive_wkhtmltoimage_path');
+      variable_del('slandora_web_archive_make_wkhtmltoimage_locally');
+      variable_del('islandora_web_archive_pngcrush_path');
+      variable_del('islandora_web_archive_make_pngcrush_locally');
+      variable_del('islandora_web_archive_wget_path');
+      variable_del('islandora_web_archive_make_warc_locally');
     break;
   }
 }

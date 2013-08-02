@@ -37,12 +37,12 @@ function islandora_web_archive_create_all_derivatives(AbstractObject $object, $f
  * Fetches the upload image file from Fedora, and saves it to a temp location.
  *
  * @param AbstractObject $object
- *  The object to fetch the uploaded image file from.
+ *    The object to fetch the uploaded image file from.
  * @param string $base_name
- *  The base name to use in creating temp files.
+ *    The base name to use in creating temp files.
  *
  * @return string
- *  The file path to the temp file if successful, FALSE otherwise.
+ *    The file path to the temp file if successful, FALSE otherwise.
  */
 function islandora_web_archive_get_uploaded_file(AbstractObject $object, $base_name) {
   $mime_detector = new MimeDetect();
@@ -123,10 +123,8 @@ function islandora_web_archive_create_TN_derivative(AbstractObject $object, $upl
  *   The source file uri to convert from.
  * @param string $dest
  *   The destination file uri to convert into.
- * @param int $width
+ * @param string args
  *   The source file to convert from.
- * @param int $height
- *   The destination file to convert into.
  *
  * @return string
  *   The destination file path if successful otherwise FALSE.
@@ -139,11 +137,10 @@ function islandora_web_archive_imagemagick_convert($src, $dest, $args) {
     'destination' => $dest,
   );
   drupal_alter('imagemagick_arguments', $args, $context);
-  /**
-   * To make use of ImageMagick 6's parenthetical command grouping we need to
-   * make the $source image the first parameter and $dest the last.
-   * See http://www.imagemagick.org/Usage/basics/#cmdline
-   */
+  // To make use of ImageMagick 6's parenthetical command grouping we need to.
+  // make the $source image the first parameter and $dest the last.
+  // See http://www.imagemagick.org/Usage/basics/#cmdline.
+
   $command = escapeshellarg($src) . ' ' . implode(' ', $args) . ' ' . escapeshellarg($dest);
   $output = '';
   $ret = -1;
