@@ -104,6 +104,6 @@ function islandora_web_archive_admin_submit($form, &$form_state) {
       variable_del('islandora_web_archive_make_pngcrush_locally');
       variable_del('islandora_web_archive_wget_path');
       variable_del('islandora_web_archive_make_warc_locally');
-    break;
+      break;
   }
 }
