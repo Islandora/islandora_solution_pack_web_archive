@@ -2,7 +2,6 @@
 
 /**
  * @file
- *
  * Handles the uploading of the warc file.
  */
 

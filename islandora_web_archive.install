@@ -7,8 +7,6 @@
 
 /**
  * Implements hook_install().
- *
- * @see islandora_web_archive_islandora_required_objects()
  */
 
 function islandora_web_archive_install() {

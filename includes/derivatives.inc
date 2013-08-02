@@ -2,22 +2,21 @@
 
 /**
  * @file
- *
- * This file contains all the functions for screen capture manipulation used in the
- * web archive solution pack.
+ * This file contains all the functions for screen capture manipulation used in
+ * the web archive solution pack.
  */
 
 /**
- * Creates the derivatives for this content model type
+ * Creates the derivatives for this content model type.
  *
  * @param AbstractObject $object
- *  The object to add derivatives to.
+ *     The object to add derivatives to.
  * @param bool $force
- *   Whether or not we should force the derivatives to be created, in the case
- *   that they already exist on the given object.
+ *     Whether or not we should force the derivatives to be created, in the case
+ *     that they already exist on the given object.
  *
- * @return boolean
- *   TRUE if all derivatives were created successfully, FALSE otherwise.
+ * @return bool
+ *     TRUE if all derivatives were created successfully, FALSE otherwise.
  */
 function islandora_web_archive_create_all_derivatives(AbstractObject $object, $force = TRUE) {
   if (!isset($object["PNG"])) {
@@ -54,21 +53,21 @@ function islandora_web_archive_get_uploaded_file(AbstractObject $object, $base_n
 }
 
 /**
-  * Creates the JPG derived datatstream from the uploaded image file.
-  *
-  * @param AbstractObject $object
-  *   The object to add the derived datastream to.
-  * @param string $uploaded_file
-  *   The file path to the uploaded image file to derive from.
-  * @param string $base_name
-  *   The base name to use in creating temp files.
-  * @param bool $force
-  *   Whether or not we should force the derivatives to be created, in the case
-  *   that they already exist on the given object.
-  *
-  * @return boolean
-  *   TRUE if successful, FALSE otherwise.
-  */
+ * Creates the JPG derived datatstream from the uploaded image file.
+ *
+ * @param AbstractObject $object
+ *   The object to add the derived datastream to.
+ * @param string $uploaded_file
+ *   The file path to the uploaded image file to derive from.
+ * @param string $base_name
+ *   The base name to use in creating temp files.
+ * @param bool $force
+ *   Whether or not we should force the derivatives to be created, in the case
+ *   that they already exist on the given object.
+ *
+ * @return bool
+ *   TRUE if successful, FALSE otherwise.
+ */
 function islandora_web_archive_create_JPG_derivative(AbstractObject $object, $uploaded_file, $base_name, $force = TRUE) {
   if ($force || !isset($object['JPG'])) {
     $args = array();
@@ -86,21 +85,21 @@ function islandora_web_archive_create_JPG_derivative(AbstractObject $object, $up
 }
 
 /**
-  * Creates the TN derived datatstream from the uploaded image file.
-  *
-  * @param AbstractObject $object
-  *   The object to add the derived datastream to.
-  * @param string $uploaded_file
-  *   The file path to the uploaded image file to derive from.
-  * @param string $base_name
-  *   The base name to use in creating temp files.
-  * @param bool $force
-  *   Whether or not we should force the derivatives to be created, in the case
-  *   that they already exist on the given object.
-  *
-  * @return boolean
-  *   TRUE if successful, FALSE otherwise.
-  */
+ * Creates the TN derived datatstream from the uploaded image file.
+ *
+ * @param AbstractObject $object
+ *   The object to add the derived datastream to.
+ * @param string $uploaded_file
+ *   The file path to the uploaded image file to derive from.
+ * @param string $base_name
+ *   The base name to use in creating temp files.
+ * @param bool $force
+ *   Whether or not we should force the derivatives to be created, in the case
+ *   that they already exist on the given object.
+ *
+ * @return boolean
+ *   TRUE if successful, FALSE otherwise.
+ */
 function islandora_web_archive_create_TN_derivative(AbstractObject $object, $uploaded_file, $base_name, $force = TRUE) {
   if ($force || !isset($object['TN'])) {
     $args = array();
@@ -118,20 +117,20 @@ function islandora_web_archive_create_TN_derivative(AbstractObject $object, $upl
 }
 
 /**
-  * Calls imagemagick's convert command with the given arguments.
-  *
-  * @param string $src
-  *   The source file uri to convert from.
-  * @param string $dest
-  *   The destination file uri to convert into.
-  * @param int $width
-  *   The source file to convert from.
-  * @param int $height
-  *   The destination file to convert into.
-  *
-  * @return string
-  *   The destination file path if successful otherwise FALSE.
-  */
+ * Calls imagemagick's convert command with the given arguments.
+ *
+ * @param string $src
+ *   The source file uri to convert from.
+ * @param string $dest
+ *   The destination file uri to convert into.
+ * @param int $width
+ *   The source file to convert from.
+ * @param int $height
+ *   The destination file to convert into.
+ *
+ * @return string
+ *   The destination file path if successful otherwise FALSE.
+ */
 function islandora_web_archive_imagemagick_convert($src, $dest, $args) {
   $src = drupal_realpath($src) . '[0]';
   $dest = drupal_realpath($dest);
@@ -157,21 +156,21 @@ function islandora_web_archive_imagemagick_convert($src, $dest, $args) {
 }
 
 /**
-  * Adds a datastream to an object.
-  *
-  * @param object $object
-  *   The object to add a datastream to.
-  * @param string $dsid
-  *   The datastream ID to be added.
-  * @param string $file
-  *   The URI of the file to be added as the datastream content.
-  * @param string $mimetype
-  *   The mimetype of the file.
-  * @param string $label
-  *   The label for the datastream.
-  *
-  * @TODO: could this be a generic function? eg: islandora_add_datastream($object, $dsid, $file). ?
-  */
+ * Adds a datastream to an object.
+ *
+ * @param object $object
+ *   The object to add a datastream to.
+ * @param string $dsid
+ *   The datastream ID to be added.
+ * @param string $file
+ *   The URI of the file to be added as the datastream content.
+ * @param string $mimetype
+ *   The mimetype of the file.
+ * @param string $label
+ *   The label for the datastream.
+ *
+ * @TODO: could this be a generic function? eg: islandora_add_datastream($object, $dsid, $file). ?
+ */
 function islandora_web_archive_add_datastream(AbstractObject $object, $dsid, $file, $mimetype, $label) {
   $ds = $object->constructDatastream($dsid, 'M');
   $ds->label = $label;
@@ -187,15 +186,15 @@ function islandora_web_archive_add_datastream(AbstractObject $object, $dsid, $fi
 }
 
 /**
-  * Uses Imagemagick's identify to examine the file in question.
-  *
-  * @param string $file
-  *   A file-system path to the file in question.
-  *
-  * @return boolean
-  *   A boolean indicating if the file contains a TIFF which is not compressed,
-  *   (if it could be reencoded by the "free" version of Kakadu.
-  */
+ * Uses Imagemagick's identify to examine the file in question.
+ *
+ * @param string $file
+ *   A file-system path to the file in question.
+ *
+ * @return boolean
+ *   A boolean indicating if the file contains a TIFF which is not compressed,
+ *   (if it could be reencoded by the "free" version of Kakadu.
+ */
 function islandora_large_image_is_uncompressed_png($file) {
   $identify = islandora_large_image_get_identify();
   $file = drupal_realpath($file);
@@ -205,14 +204,14 @@ function islandora_large_image_is_uncompressed_png($file) {
 }
 
 /**
-  * Uses Imagemagick's identify to determine if the file is a PNG.
-  *
-  * @param string $file
-  *   A file-system path to the file in question.
-  *
-  * @return boolean
-  *   A boolean indicating if the file contains a PNG.
-  */
+ * Uses Imagemagick's identify to determine if the file is a PNG.
+ *
+ * @param string $file
+ *   A file-system path to the file in question.
+ *
+ * @return boolean
+ *   A boolean indicating if the file contains a PNG.
+ */
 function islandora_web_archive_is_png($file) {
   $identify = islandora_web_archive_get_identify();
   $file = drupal_realpath($file);
@@ -222,19 +221,19 @@ function islandora_web_archive_is_png($file) {
 }
 
 /**
-  * Attempt to get the "identify" executable...
-  *
-  * Assume convert is sanely named, and that identify can be obtained from the
-  * same place.
-  *
-  * @return string
-  *   The command to run for "identify".
-  */
+ * Attempt to get the "identify" executable...
+ *
+ * Assume convert is sanely named, and that identify can be obtained from the
+ * same place.
+ *
+ * @return string
+ *   The command to run for "identify".
+ */
 function islandora_web_archive_get_identify() {
-  //Get path for convert
+  // Get path for convert.
   $convert = variable_get('imagemagick_convert', 'convert');
 
-  // Replace "convert" with "identify"
+  // Replace "convert" with "identify".
   $identify = str_replace('convert', 'identify', $convert);
   return $identify;
 }

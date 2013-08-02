@@ -26,9 +26,8 @@ function islandora_web_archive_menu() {
  * Implements hook_theme().
  *
  * We supply a pattern so we can overide templates at the theme level if needed.
- * We can append a pid to a template and the new template file will be called (the pids
- * colon should be replaced with a dash)
- * @return array
+ * We can append a pid to a template and the new template file will be called
+ * (the pid's colon should be replaced with a dash)
  */
 function islandora_web_archive_theme($existing, $type, $theme, $path) {
   return array(
@@ -37,7 +36,7 @@ function islandora_web_archive_theme($existing, $type, $theme, $path) {
       'file' => 'theme/theme.inc',
       'pattern' => 'islandora_web_archive__',
       'variable' => array('object' => NULL),
-    )
+    ),
   );
 }
 
@@ -48,36 +47,36 @@ function islandora_web_archive_theme($existing, $type, $theme, $path) {
  */
 function islandora_web_archive_islandora_required_objects(IslandoraTuque $connection) {
   $module_path = drupal_get_path('module', 'islandora_web_archive');
-  // Web ARChive Content Model
+  // Web ARChive Content Model.
   $web_archive_content_model = $connection->repository->constructObject('islandora:sp_web_archive');
   $web_archive_content_model->owner = 'fedoraAdmin';
   $web_archive_content_model->label = 'Islandora Web ARChive Content Model';
   $web_archive_content_model->models = 'fedora-system:ContentModel-3.0';
-  // ISLANDORACM Datastream
+  // ISLANDORACM Datastream.
   $datastream = $web_archive_content_model->constructDatastream('ISLANDORACM', 'X');
   $datastream->label = 'Islandora content model';
   $datastream->mimetype = 'text/xml';
   $datastream->setContentFromFile("$module_path/xml/islandora_web_archive_content_model.xml", FALSE);
   $web_archive_content_model->ingestDatastream($datastream);
-  // DS-COMPOSITE-MODEL Datastream
+  // DS-COMPOSITE-MODEL Datastream.
   $datastream = $web_archive_content_model->constructDatastream('DS-COMPOSITE-MODEL', 'X');
   $datastream->label = 'DS-COMPOSITE-MODEL';
   $datastream->mimetype = 'text/xml';
   $datastream->setContentFromFile("$module_path/xml/islandora_web_archive_ds_composite_model.xml", FALSE);
   $web_archive_content_model->ingestDatastream($datastream);
-  // Web ARChive Collection
+  // Web ARChive Collection.
   $web_archive_collection = $connection->repository->constructObject('islandora:sp_web_archive_collection');
   $web_archive_collection->owner = 'fedoraAdmin';
   $web_archive_collection->label = 'Web ARChive Collection';
   $web_archive_collection->models = 'islandora:collectionCModel';
   $web_archive_collection->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', 'islandora:root');
-  // Collection Policy Datastream
+  // Collection Policy Datastream.
   $datastream = $web_archive_collection->constructDatastream('COLLECTION_POLICY', 'X');
   $datastream->label = 'Collection policy';
   $datastream->mimetype = 'text/xml';
   $datastream->setContentFromFile("$module_path/xml/islandora_web_archive_collection_policy.xml", FALSE);
   $web_archive_collection->ingestDatastream($datastream);
-  // TN Datastream
+  // TN Datastream.
   $datastream = $web_archive_collection->constructDatastream('TN', 'M');
   $datastream->label = 'Thumbnail';
   $datastream->mimetype = 'image/png';
@@ -120,7 +119,7 @@ function islandora_web_archive_islandora_xml_form_builder_form_associations() {
       ),
       'transform' => 'mods_to_dc.xsl',
       'template' => FALSE,
-    )
+    ),
   );
 }
 
@@ -150,7 +149,7 @@ function islandora_web_archive_islandora_sp_web_archive_islandora_ingest_steps()
       'type' => 'form',
       'form_id' => 'islandora_web_archive_upload_form',
       'module' => 'islandora_web_archive',
-      'file' => 'includes/web_archive_upload.form.inc'
-    )
+      'file' => 'includes/web_archive_upload.form.inc',
+    ),
   );
 }

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @file
  * This is the template file for the object page for web archives
