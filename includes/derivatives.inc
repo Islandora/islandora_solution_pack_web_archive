@@ -36,13 +36,13 @@ function islandora_web_archive_create_all_derivatives(AbstractObject $object, $f
 /**
  * Fetches the upload image file from Fedora, and saves it to a temp location.
  *
- *   @param AbstractObject $object
- *     The object to fetch the uploaded image file from.
- *   @param string $base_name
- *     The base name to use in creating temp files.
+ * @param Abstract $object
+ *   The object to fetch the uploaded image file from.
+ * @param string $base_name
+ *   The base name to use in creating temp files.
  *
- *   @return string
- *     The file path to the temp file if successful, FALSE otherwise.
+ * @return string
+ *   The file path to the temp file if successful, otherwise FALSE.
  */
 function islandora_web_archive_get_uploaded_file(AbstractObject $object, $base_name) {
   $mime_detector = new MimeDetect();
@@ -145,8 +145,12 @@ function islandora_web_archive_imagemagick_convert($src, $dest, $args) {
   $ret = -1;
   if (_imagemagick_convert_exec($command, $output, $ret) !== TRUE) {
     $message = 'ImageMagick failed to create derivatives<br/>Error: @ret<br/>Command: @command<br/>Output: @output';
-    $variables = array('@ret' => $ret, '@command' => $command, '@output' => $output);
-    watchdog('islandora_web_archive', $message, $variables, WATCHDOG_ERROR);
+    $variables = array(
+      '@ret' => $ret,
+      '@command' => $command,
+      '@output' => $output,
+    );
+    watchdog('islandora_web_archive', "@message  @variables", WATCHDOG_ERROR);
     return FALSE;
   }
   return $dest;

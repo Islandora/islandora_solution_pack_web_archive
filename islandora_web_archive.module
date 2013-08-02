@@ -40,10 +40,8 @@ function islandora_web_archive_theme($existing, $type, $theme, $path) {
   );
 }
 
-/*
+/**
  * Implements hook_islandora_required_objects().
- *
- * Ummm.
  */
 function islandora_web_archive_islandora_required_objects(IslandoraTuque $connection) {
   $module_path = drupal_get_path('module', 'islandora_web_archive');
