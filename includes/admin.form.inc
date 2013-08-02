@@ -42,7 +42,7 @@ function islandora_web_archive_admin($form, &$form_state) {
     '#default_value' => variable_get('islandora_web_archive_make_wkhtmltopdf_locally', TRUE),
   );
 
- $form['islandora_web_archive_wkhtmltoimage_path'] = array(
+  $form['islandora_web_archive_wkhtmltoimage_path'] = array(
     '#type' => 'textfield',
     '#title' => t('Path to wkhtmltoimage executable.'),
     '#default_value' => variable_get('islandora_web_archive_wkhtmltoimage_path', 'wkhtmltoimage'),
@@ -72,7 +72,7 @@ function islandora_web_archive_admin($form, &$form_state) {
     '#default_value' => variable_get('islandora_web_archive_make_pngcrush_locally', TRUE),
   );
 
- $form['islandora_web_archive_wget_path'] = array(
+  $form['islandora_web_archive_wget_path'] = array(
     '#type' => 'textfield',
     '#title' => t('Path to wget executable.'),
     '#default_value' => variable_get('islandora_web_archive_wget_path', 'wget'),

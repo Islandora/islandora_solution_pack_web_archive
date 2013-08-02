@@ -10,13 +10,13 @@
  * Creates the derivatives for this content model type.
  *
  * @param AbstractObject $object
- *     The object to add derivatives to.
+ *   The object to add derivatives to.
  * @param bool $force
- *     Whether or not we should force the derivatives to be created, in the case
- *     that they already exist on the given object.
+ *   Whether or not we should force the derivatives to be created, in the case
+ *   that they already exist on the given object.
  *
  * @return bool
- *     TRUE if all derivatives were created successfully, FALSE otherwise.
+ *   TRUE if all derivatives were created successfully, FALSE otherwise.
  */
 function islandora_web_archive_create_all_derivatives(AbstractObject $object, $force = TRUE) {
   if (!isset($object["PNG"])) {
@@ -97,7 +97,7 @@ function islandora_web_archive_create_JPG_derivative(AbstractObject $object, $up
  *   Whether or not we should force the derivatives to be created, in the case
  *   that they already exist on the given object.
  *
- * @return boolean
+ * @return bool
  *   TRUE if successful, FALSE otherwise.
  */
 function islandora_web_archive_create_TN_derivative(AbstractObject $object, $uploaded_file, $base_name, $force = TRUE) {
@@ -140,19 +140,20 @@ function islandora_web_archive_imagemagick_convert($src, $dest, $args) {
   );
   drupal_alter('imagemagick_arguments', $args, $context);
   /**
-   * To make use of ImageMagick 6's parenthetical command grouping we need to make the $source image the first parameter and $dest the last.
+   * To make use of ImageMagick 6's parenthetical command grouping we need to
+   * make the $source image the first parameter and $dest the last.
    * See http://www.imagemagick.org/Usage/basics/#cmdline
    */
-   $command = escapeshellarg($src) . ' ' . implode(' ', $args) . ' ' . escapeshellarg($dest);
-   $output = '';
-   $ret = -1;
-   if (_imagemagick_convert_exec($command, $output, $ret) !== TRUE) {
-     $message = 'ImageMagick failed to create derivatives<br/>Error: @ret<br/>Command: @command<br/>Output: @output';
-     $variables = array('@ret' => $ret, '@command' => $command, '@output' => $output);
-     watchdog('islandora_web_archive', $message, $variables, WATCHDOG_ERROR);
-     return FALSE;
-   }
-   return $dest;
+  $command = escapeshellarg($src) . ' ' . implode(' ', $args) . ' ' . escapeshellarg($dest);
+  $output = '';
+  $ret = -1;
+  if (_imagemagick_convert_exec($command, $output, $ret) !== TRUE) {
+    $message = 'ImageMagick failed to create derivatives<br/>Error: @ret<br/>Command: @command<br/>Output: @output';
+    $variables = array('@ret' => $ret, '@command' => $command, '@output' => $output);
+    watchdog('islandora_web_archive', $message, $variables, WATCHDOG_ERROR);
+    return FALSE;
+  }
+  return $dest;
 }
 
 /**
@@ -169,7 +170,8 @@ function islandora_web_archive_imagemagick_convert($src, $dest, $args) {
  * @param string $label
  *   The label for the datastream.
  *
- * @TODO: could this be a generic function? eg: islandora_add_datastream($object, $dsid, $file). ?
+ * @TODO: could this be a generic function?
+ * eg: islandora_add_datastream($object, $dsid, $file). ?
  */
 function islandora_web_archive_add_datastream(AbstractObject $object, $dsid, $file, $mimetype, $label) {
   $ds = $object->constructDatastream($dsid, 'M');
@@ -178,7 +180,8 @@ function islandora_web_archive_add_datastream(AbstractObject $object, $dsid, $fi
   $ds->setContentFromFile($file);
   try {
     $object->ingestDatastream($ds);
-  } catch (exception $e) {
+  }
+  catch (exception $e) {
     drupal_set_message(t('@message', array('@message' => check_plain($e->getMessage()))), 'error');
     return FALSE;
   }
@@ -191,8 +194,8 @@ function islandora_web_archive_add_datastream(AbstractObject $object, $dsid, $fi
  * @param string $file
  *   A file-system path to the file in question.
  *
- * @return boolean
- *   A boolean indicating if the file contains a TIFF which is not compressed,
+ * @return bool
+ *   A bool indicating if the file contains a TIFF which is not compressed,
  *   (if it could be reencoded by the "free" version of Kakadu.
  */
 function islandora_large_image_is_uncompressed_png($file) {
@@ -209,8 +212,8 @@ function islandora_large_image_is_uncompressed_png($file) {
  * @param string $file
  *   A file-system path to the file in question.
  *
- * @return boolean
- *   A boolean indicating if the file contains a PNG.
+ * @return bool
+ *   A bool indicating if the file contains a PNG.
  */
 function islandora_web_archive_is_png($file) {
   $identify = islandora_web_archive_get_identify();
