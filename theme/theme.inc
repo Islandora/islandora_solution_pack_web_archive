@@ -40,7 +40,7 @@ function islandora_web_archive_preprocess_islandora_web_archive(&$variables) {
     $variables['islandora_png'] = $png_url;
     $params = array(
       'title' => $islandora_object->label,
-      'path' => $warc_urli,
+      'path' => $warc_url,
     );
     $variables['islandora_warc'] = theme('warc', $params);
   }
