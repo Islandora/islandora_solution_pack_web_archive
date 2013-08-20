@@ -21,7 +21,7 @@
   <datastreams>
     <datastream dsid="QDC">
     </datastream>
-    <datastream dsid="OBJ">
+    <datastream dsid="WARC">
       <display_method class="DisplayWarcStreams" file="warc_sp.inc" method="showWarcLink" module="islandora_web_archive_sp"/>
     </datastream>
     <datastream dsid="TECHMD_FITS" />

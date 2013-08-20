@@ -31,8 +31,8 @@ function islandora_web_archive_preprocess_islandora_web_archive(&$variables) {
   $variables['parent_collections'] = islandora_get_parents_from_rels_ext($islandora_object);
   global $base_url;
   // Original.
-  if (isset($islandora_object['OBJ'])) {
-    $warc_url = url("islandora/object/{$islandora_object->id}/datastream/OBJ/view", array('absolute' => TRUE));
+  if (isset($islandora_object['WARC'])) {
+    $warc_url = url("islandora/object/{$islandora_object->id}/datastream/WARC/view", array('absolute' => TRUE));
     $png_url = url("islandora/object/{$islandora_object->id}/datastream/PNG/{$islandora_object->label}", array('absolute' => TRUE));
     $pdf_url = url("islandora/object/{$islandora_object->id}/datastream/PDF/{$islandora_object->label}", array('absolute' => TRUE));
     $variables['islandora_warc'] = $warc_url;
@@ -69,8 +69,8 @@ function islandora_web_archive_preprocess_islandora_web_archive(&$variables) {
     }
   }
   // Download warc.
-  if (isset($islandora_object['OBJ'])) {
-    $warc_url = url("islandora/object/{$islandora_object->id}/datastream/OBJ/{$islandora_object->label}.warc", array('absolute' => TRUE));
+  if (isset($islandora_object['WARC'])) {
+    $warc_url = url("islandora/object/{$islandora_object->id}/datastream/WARC/{$islandora_object->label}.warc", array('absolute' => TRUE));
     $params = array(
       'title' => $islandora_object->label,
       'path' => $warc_url,
