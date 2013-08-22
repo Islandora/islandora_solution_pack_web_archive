@@ -15,7 +15,7 @@ Adds all required Fedora objects to allow users to ingest and retrieve web archi
 
 ## Solr indexing
 
-If you are using Solr 4+, warcs will automatically be indexed via Apache Tika.
+If you are using Solr 4+, warcs will automatically be indexed via Apache Tika. You will need to add `ds.WARC^1` to the Query fields form in 'admin/islandora/search/islandora_solr/settings'
 
 ## License
 
