@@ -46,12 +46,12 @@ function islandora_web_archive_upload_form(array $form, array &$form_state) {
  */
 function islandora_web_archive_upload_form_submit(array $form, array &$form_state) {
   $object = $form_state['islandora']['objects'][0];
-  if (empty($object['WARC'])) {
-    $ds = $object->constructDatastream('WARC', 'M');
+  if (empty($object['OBJ'])) {
+    $ds = $object->constructDatastream('OBJ', 'M');
     $object->ingestDatastream($ds);
   }
   else {
-    $ds = $object['WARC'];
+    $ds = $object['OBJ'];
   }
   $file = file_load($form_state['values']['file']);
   $path = drupal_realpath($file->uri);

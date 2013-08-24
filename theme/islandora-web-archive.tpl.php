@@ -31,6 +31,9 @@
           <?php $result = drupal_http_request($islandora_png); if(in_array($result->code, array(-1002, 200))): ?>
             <li>Screenshot: <?php print $islandora_png; ?>
           <?php endif; ?>
+          <?php $result = drupal_http_request($islandora_csv); if(in_array($result->code, array(-1002, 200))): ?>
+            <li>CSV: <?php print $islandora_csv; ?>
+          <?php endif; ?>
         </ul>
     </div>
     <?php if ($parent_collections): ?>

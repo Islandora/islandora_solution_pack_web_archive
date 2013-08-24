@@ -7,7 +7,7 @@
  */
 
 /**
- * Creates the derivatives for this content model type.
+ * Creates the image derivatives for this content model type.
  *
  * @param AbstractObject $object
  *   The object to add derivatives to.
@@ -18,23 +18,23 @@
  * @return bool
  *   TRUE if all derivatives were created successfully, FALSE otherwise.
  */
-function islandora_web_archive_create_all_derivatives(AbstractObject $object, $force = TRUE) {
+function islandora_web_archive_create_image_derivatives(AbstractObject $object, $force = TRUE) {
   if (!isset($object["PNG"])) {
     drupal_set_message(t("Could not create derivatives for @s.  No PNG file was uploaded.", array("@s" => $object->id)), "error");
     return FALSE;
   }
   $base_name = str_replace(':', '-', $object->id);
-  $uploaded_file = islandora_web_archive_get_uploaded_file($object, $base_name);
-  if ($uploaded_file) {
-    $jpg = islandora_web_archive_create_JPG_derivative($object, $uploaded_file, $base_name, $force = TRUE);
-    $tn = islandora_web_archive_create_TN_derivative($object, $uploaded_file, $base_name, $force = TRUE);
-    return $jpg && $tn && file_unmanaged_delete($uploaded_file);
+  $uploaded_png = islandora_web_archive_get_uploaded_png($object, $base_name);
+  if ($uploaded_png) {
+    $jpg = islandora_web_archive_create_JPG_derivative($object, $uploaded_png, $base_name, $force = TRUE);
+    $tn = islandora_web_archive_create_TN_derivative($object, $uploaded_png, $base_name, $force = TRUE);
+    return $jpg && $tn && file_unmanaged_delete($uploaded_png);
   }
   return FALSE;
 }
 
 /**
- * Fetches the upload image file from Fedora, and saves it to a temp location.
+ * Fetches the uploaded image file from Fedora, and saves it to a temp location.
  *
  * @param Abstract $object
  *   The object to fetch the uploaded image file from.
@@ -44,7 +44,7 @@ function islandora_web_archive_create_all_derivatives(AbstractObject $object, $f
  * @return string
  *   The file path to the temp file if successful, otherwise FALSE.
  */
-function islandora_web_archive_get_uploaded_file(AbstractObject $object, $base_name) {
+function islandora_web_archive_get_uploaded_png(AbstractObject $object, $base_name) {
   $mime_detector = new MimeDetect();
   $ext = $mime_detector->getExtension($object['PNG']->mimeType);
   $filename = file_create_filename("{$base_name}_PNG.{$ext}", 'temporary://');
@@ -57,7 +57,7 @@ function islandora_web_archive_get_uploaded_file(AbstractObject $object, $base_n
  *
  * @param AbstractObject $object
  *   The object to add the derived datastream to.
- * @param string $uploaded_file
+ * @param string $uploaded_png
  *   The file path to the uploaded image file to derive from.
  * @param string $base_name
  *   The base name to use in creating temp files.
@@ -68,12 +68,12 @@ function islandora_web_archive_get_uploaded_file(AbstractObject $object, $base_n
  * @return bool
  *   TRUE if successful, FALSE otherwise.
  */
-function islandora_web_archive_create_JPG_derivative(AbstractObject $object, $uploaded_file, $base_name, $force = TRUE) {
+function islandora_web_archive_create_JPG_derivative(AbstractObject $object, $uploaded_png, $base_name, $force = TRUE) {
   if ($force || !isset($object['JPG'])) {
     $args = array();
     $args[] = '-resize ' . escapeshellarg("600 x 800");
     $args[] = '-quality ' . escapeshellarg(variable_get('imagemagick_quality', 75));
-    $derivative_file = islandora_web_archive_imagemagick_convert($uploaded_file, "temporary://{$base_name}_MED.jpg", $args);
+    $derivative_file = islandora_web_archive_imagemagick_convert($uploaded_png, "temporary://{$base_name}_MED.jpg", $args);
     if ($derivative_file === FALSE) {
       drupal_set_message(t('Failed to create JPG derivative'), 'error');
       return FALSE;
@@ -89,7 +89,7 @@ function islandora_web_archive_create_JPG_derivative(AbstractObject $object, $up
  *
  * @param AbstractObject $object
  *   The object to add the derived datastream to.
- * @param string $uploaded_file
+ * @param string $uploaded_png
  *   The file path to the uploaded image file to derive from.
  * @param string $base_name
  *   The base name to use in creating temp files.
@@ -100,12 +100,12 @@ function islandora_web_archive_create_JPG_derivative(AbstractObject $object, $up
  * @return bool
  *   TRUE if successful, FALSE otherwise.
  */
-function islandora_web_archive_create_TN_derivative(AbstractObject $object, $uploaded_file, $base_name, $force = TRUE) {
+function islandora_web_archive_create_TN_derivative(AbstractObject $object, $uploaded_png, $base_name, $force = TRUE) {
   if ($force || !isset($object['TN'])) {
     $args = array();
     $args[] = '-quality ' . escapeshellarg(variable_get('imagemagick_quality', 75));
     $args[] = '-resize ' . escapeshellarg("200 x 200");
-    $derivative_file = islandora_web_archive_imagemagick_convert($uploaded_file, "temporary://{$base_name}_TN.jpg", $args);
+    $derivative_file = islandora_web_archive_imagemagick_convert($uploaded_png, "temporary://{$base_name}_TN.jpg", $args);
     if ($derivative_file === FALSE) {
       drupal_set_message(t('Failed to create TN derivative'), 'error');
       return FALSE;
@@ -154,6 +154,118 @@ function islandora_web_archive_imagemagick_convert($src, $dest, $args) {
     return FALSE;
   }
   return $dest;
+}
+
+/**
+ * Creates the warc derivatives for this content model type.
+ *
+ * @param AbstractObject $object
+ *   The object to add derivatives to.
+ * @param bool $force
+ *   Whether or not we should force the derivatives to be created, in the case
+ *   that they already exist on the given object.
+ *
+ * @return bool
+ *   TRUE if all derivatives were created successfully, FALSE otherwise.
+ */
+function islandora_web_archive_create_warc_derivatives(AbstractObject $object, $force = TRUE) {
+  if (!isset($object['OBJ'])) {
+    drupal_set_message(t("Could not create derivatives for @s.  No WARC file was uploaded.", array("@s" => $object->id)), "error");
+    return FALSE;
+  }
+  $warc_name = str_replace(':', '-', $object->id);
+  $uploaded_warc = islandora_web_archive_get_uploaded_warc($object, $warc_name);
+  if ($uploaded_warc) {
+    $csv = islandora_web_archive_create_warc_csv_derivative($object, $uploaded_warc, $warc_name, $force = TRUE);
+    $filtered = islandora_web_archive_create_warc_filtered_derivative($object, $uploaded_warc, $warc_name, $force = TRUE);
+    return $csv && $filtered && file_unmanaged_delete($uploaded_warc);
+  }
+  return FALSE;
+}
+
+/**
+ * Fetches the uploaded warc file from Fedora, and saves it to a temp location.
+ *
+ * @param Abstract $object
+ *   The object to fetch the uploaded image file from.
+ * @param string $base_name
+ *   The base name to use in creating temp files.
+ *
+ * @return string
+ *   The file path to the temp file if successful, otherwise FALSE.
+ */
+function islandora_web_archive_get_uploaded_warc(AbstractObject $object, $warc_name) {
+  //$mime_detector = new MimeDetect();
+  //$ext = $mime_detector->getExtension($object['OBJ']->mimeType);
+  $filename = file_create_filename("{$warc_name}_OBJ.warc", 'temporary://');
+  $object['OBJ']->getContent($filename);
+  return $filename;
+}
+
+/**
+ * Creates the warc csv derived datatstream from the uploaded warc file.
+ *
+ * @param AbstractObject $object
+ *   The object to add the derived datastream to.
+ * @param string $uploaded_png
+ *   The file path to the uploaded image file to derive from.
+ * @param string $base_name
+ *   The base name to use in creating temp files.
+ * @param bool $force
+ *   Whether or not we should force the derivatives to be created, in the case
+ *   that they already exist on the given object.
+ *
+ * @return bool
+ *   TRUE if successful, FALSE otherwise.
+ */
+function islandora_web_archive_create_warc_csv_derivative(AbstractObject $object, $uploaded_warc, $warc_name, $force = TRUE) {
+  if ($force || !isset($object['WARC_CSV'])) {
+    $warcindex = variable_get('islandora_web_archive_warcindex_path', '/usr/local/bin/warcindex');
+    $csv_file = drupal_realpath("temporary://{$warc_name}_WARC_CSV.csv");
+    $warc_file = drupal_realpath($uploaded_warc);
+    $command = "$warcindex $warc_file > $csv_file";
+    $derivative_file = exec($command, $output);
+    if ($derivative_value === FALSE) {
+      drupal_set_message(t('warcindex failed for object @pid - WARC_CSV creation was skipped.'), 'error');
+      return FALSE;
+    }
+    islandora_web_archive_add_datastream($object, 'WARC_CSV', $csv_file, 'text/plain', t('WARC Index'));
+    return file_unmanaged_delete($derivative_file);
+  }
+  return TRUE;
+}
+
+/**
+ * Creates the warc filtered derived datatstream from the uploaded warc file.
+ *
+ * @param AbstractObject $object
+ *   The object to add the derived datastream to.
+ * @param string $uploaded_png
+ *   The file path to the uploaded image file to derive from.
+ * @param string $base_name
+ *   The base name to use in creating temp files.
+ * @param bool $force
+ *   Whether or not we should force the derivatives to be created, in the case
+ *   that they already exist on the given object.
+ *
+ * @return bool
+ *   TRUE if successful, FALSE otherwise.
+ */
+function islandora_web_archive_create_warc_filtered_derivative(AbstractObject $object, $uploaded_warc, $warc_name, $force = TRUE) {
+  if ($force || !isset($object['WARC_FILTERED'])) {
+    $warcfilter = variable_get('islandora_web_archive_warcfilter_path', '/usr/local/bin/warcfilter');
+    $filtered_file = drupal_realpath("temporary://{$warc_name}_WARC_FILTERED.warc");
+    $warc_file = drupal_realpath($uploaded_warc);
+    $command = "$warcfilter -H text $warc_file > $filtered_file";
+    $derivative_file = exec($command, $output);
+    if ($derivative_value === FALSE) {
+      drupal_set_message(t('warcfilter failed for object @pid - WARC_FILTERED creation was skipped.'), 'error');
+      return FALSE;
+    }
+    islandora_web_archive_add_datastream($object, 'WARC_FILTER', $filtered_file, 'application/warc', t('WARC Index'));
+    return file_unmanaged_delete($derivative_file);
+  }
+  return TRUE;
 }
 
 /**
