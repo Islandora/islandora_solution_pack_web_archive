@@ -60,7 +60,7 @@ class IslandoraWebArchiveIngestTestCase extends IslandoraCollectionWebTestCase {
     $this->drupalPost($path, $edit, t('Ingest'));
     $this->assertText('New Object', 'WARC object was created', 'Islandora');
     $path = $this->url;
-    $warcpath = $path . '/datastream/WARC/view';
+    $warcpath = $path . '/datastream/OBJ/view';
     $this->assertLinkByHref($warcpath, 0, t('Ingested warc found on view page'), t('Islandora'));
 
     // Determines whether or not the appropriate datastreams were created.
@@ -68,10 +68,12 @@ class IslandoraWebArchiveIngestTestCase extends IslandoraCollectionWebTestCase {
     $datastreams = array(
       'RELS-EXT',
       'DC',
-      'WARC',
+      'OBJ',
       'TN',
       'JPG',
       'PDF',
+      'WARC_CSV',
+      'WARC_FILTERED',
     );
     $this->assertDatastreams($object, $datastreams);
     // @TODO: This is commented out for now as this assert function does not
