@@ -118,7 +118,7 @@ function islandora_web_archive_preprocess_islandora_web_archive(&$variables) {
     );
     $variables['islandora_csv'] = theme('warc', $params);
     if (isset($csv_url)) {
-    $variables['islandora_csv'] = l($variables['islandora_object_label'] . '.csv', $csv_url, array('html' => TRUE));
+      $variables['islandora_csv'] = l($variables['islandora_object_label'] . '.csv', $csv_url, array('html' => TRUE));
     }
   }
 }

@@ -188,15 +188,13 @@ function islandora_web_archive_create_warc_derivatives(AbstractObject $object, $
  *
  * @param Abstract $object
  *   The object to fetch the uploaded image file from.
- * @param string $base_name
+ * @param string $warc_name
  *   The base name to use in creating temp files.
  *
  * @return string
  *   The file path to the temp file if successful, otherwise FALSE.
  */
 function islandora_web_archive_get_uploaded_warc(AbstractObject $object, $warc_name) {
-  //$mime_detector = new MimeDetect();
-  //$ext = $mime_detector->getExtension($object['OBJ']->mimeType);
   $filename = file_create_filename("{$warc_name}_OBJ.warc", 'temporary://');
   $object['OBJ']->getContent($filename);
   return $filename;
@@ -207,9 +205,9 @@ function islandora_web_archive_get_uploaded_warc(AbstractObject $object, $warc_n
  *
  * @param AbstractObject $object
  *   The object to add the derived datastream to.
- * @param string $uploaded_png
+ * @param string $uploaded_warc
  *   The file path to the uploaded image file to derive from.
- * @param string $base_name
+ * @param string $warc_name
  *   The base name to use in creating temp files.
  * @param bool $force
  *   Whether or not we should force the derivatives to be created, in the case
@@ -240,9 +238,9 @@ function islandora_web_archive_create_warc_csv_derivative(AbstractObject $object
  *
  * @param AbstractObject $object
  *   The object to add the derived datastream to.
- * @param string $uploaded_png
+ * @param string $uploaded_warc
  *   The file path to the uploaded image file to derive from.
- * @param string $base_name
+ * @param string $warc_name
  *   The base name to use in creating temp files.
  * @param bool $force
  *   Whether or not we should force the derivatives to be created, in the case
