@@ -223,12 +223,12 @@ function islandora_web_archive_create_warc_csv_derivative(AbstractObject $object
     $warc_file = drupal_realpath($uploaded_warc);
     $command = "$warcindex $warc_file > $csv_file";
     $derivative_file = exec($command, $output);
-    if ($derivative_value === FALSE) {
+    if ($derivative_file === FALSE) {
       drupal_set_message(t('warcindex failed for object @pid - WARC_CSV creation was skipped.'), 'error');
       return FALSE;
     }
     islandora_web_archive_add_datastream($object, 'WARC_CSV', $csv_file, 'text/plain', t('WARC Index'));
-    return file_unmanaged_delete($derivative_file);
+    return file_unmanaged_delete($csv_file);
   }
   return TRUE;
 }
@@ -256,12 +256,12 @@ function islandora_web_archive_create_warc_filtered_derivative(AbstractObject $o
     $warc_file = drupal_realpath($uploaded_warc);
     $command = "$warcfilter -H text $warc_file > $filtered_file";
     $derivative_file = exec($command, $output);
-    if ($derivative_value === FALSE) {
+    if ($derivative_file === FALSE) {
       drupal_set_message(t('warcfilter failed for object @pid - WARC_FILTERED creation was skipped.'), 'error');
       return FALSE;
     }
     islandora_web_archive_add_datastream($object, 'WARC_FILTER', $filtered_file, 'application/warc', t('WARC Index'));
-    return file_unmanaged_delete($derivative_file);
+    return file_unmanaged_delete($filtered_file);
   }
   return TRUE;
 }
