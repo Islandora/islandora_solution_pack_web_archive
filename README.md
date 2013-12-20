@@ -1,6 +1,6 @@
 # Islandora Web ARChive Solution Pack
 
-[![Build Status](https://travis-ci.org/ruebot/islandora_solution_pack_web_archive.png)](https://travis-ci.org/ruebot/islandora_solution_pack_web_archive)
+[![Build Status](https://travis-ci.org/Islandora/islandora_solution_pack_web_archive.png?branch=7.x)](https://travis-ci.org/Islandora/islandora_solution_pack_web_archive)
 
 ## Description
 
