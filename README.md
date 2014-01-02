@@ -1,5 +1,7 @@
 # Islandora Web ARChive Solution Pack
 
+## Build Status
+
 [![Build Status](https://travis-ci.org/Islandora/islandora_solution_pack_web_archive.png?branch=7.x)](https://travis-ci.org/Islandora/islandora_solution_pack_web_archive)
 
 ## Description
@@ -10,7 +12,7 @@ Adds all required Fedora objects to allow users to ingest and retrieve web archi
 
 ## Requirements
 
-Install [warctools](https://github.com/internetarchive/warctools) and set the paths for warcindex and warcfilter at admin/islandora/web_archive
+Install [warctools](https://github.com/internetarchive/warctools) and set the paths for `warcindex` and `warcfilter` at admin/islandora/web_archive
 
 ## Installation
 
@@ -24,14 +26,3 @@ If you are using Solr 4+, warcs will automatically be indexed via Apache Tika. Y
 ## License
 
 GPLv3
-
-## Todo
-
-- [x] Display TN
-- [x] Display PNG
-- [x] Download link for warc
-- [x] Download link for PDF
-- [x] Solr integration (indexing warcs)
-- [x] warctools integration
-- [ ] Wayback Machine dissemination
-- [ ] Automatic harvesting
