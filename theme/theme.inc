@@ -52,7 +52,6 @@ function islandora_web_archive_preprocess_islandora_web_archive(array &$variable
       'title' => $object->label,
       'path' => $warc_url,
     );
-    $variables['islandora_warc'] = theme('image', $params);
   }
   // Thumbnail.
   if (isset($object['TN']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object['TN'])) {
@@ -85,7 +84,6 @@ function islandora_web_archive_preprocess_islandora_web_archive(array &$variable
       'title' => $object->label,
       'path' => $warc_url,
     );
-    $variables['islandora_warc'] = theme('image', $params);
     if (isset($warc_url)) {
       $variables['islandora_warc'] = l($variables['islandora_object_label'] . '.warc', $warc_url, array('html' => TRUE));
     }
@@ -98,7 +96,6 @@ function islandora_web_archive_preprocess_islandora_web_archive(array &$variable
       'title' => $object->label,
       'path' => $pdf_url,
     );
-    $variables['islandora_pdf'] = theme('image', $params);
     if (isset($pdf_url)) {
       $variables['islandora_pdf'] = l($variables['islandora_object_label'] . '.pdf', $pdf_url, array('html' => TRUE));
     }
@@ -111,7 +108,6 @@ function islandora_web_archive_preprocess_islandora_web_archive(array &$variable
       'title' => $object->label,
       'path' => $png_url,
     );
-    $variables['islandora_png'] = theme('image', $params);
     if (isset($png_url)) {
       $variables['islandora_png'] = l($variables['islandora_object_label'] . '.png', $png_url, array('html' => TRUE));
     }
@@ -124,7 +120,6 @@ function islandora_web_archive_preprocess_islandora_web_archive(array &$variable
       'title' => $object->label,
       'path' => $csv_url,
     );
-    $variables['islandora_csv'] = theme('image', $params);
     if (isset($csv_url)) {
       $variables['islandora_csv'] = l($variables['islandora_object_label'] . '.csv', $csv_url, array('html' => TRUE));
     }
