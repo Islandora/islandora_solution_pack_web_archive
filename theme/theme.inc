@@ -19,7 +19,7 @@ function islandora_web_archive_preprocess_islandora_web_archive(array &$variable
   $object = $variables['object'];
   $repository = $object->repository;
   // We should eventually remove the DC object and dc_array code as it only
-  // exists to not break legacy implementations
+  // exists to not break legacy implementations.
   try {
     if (isset($object['DC']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object['DC'])) {
       $dc = $object['DC']->content;
