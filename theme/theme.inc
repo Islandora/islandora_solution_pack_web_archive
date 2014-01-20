@@ -8,56 +8,64 @@
 /**
  * Implements hook_preprocess().
  */
-function islandora_web_archive_preprocess_islandora_web_archive(&$variables) {
-  drupal_add_js('misc/form.js');
-  drupal_add_js('misc/collapse.js');
-  $islandora_object = $variables['islandora_object'];
-  $repository = $islandora_object->repository;
+function islandora_web_archive_preprocess_islandora_web_archive(array &$variables) {
   module_load_include('inc', 'islandora', 'includes/datastream');
   module_load_include('inc', 'islandora', 'includes/utilities');
   module_load_include('inc', 'islandora', 'includes/solution_packs');
-  // Get DC metadata.
+  module_load_include('inc', 'islandora', 'includes/authtokens');
+  module_load_include('inc', 'islandora', 'includes/metadata');
+  drupal_add_js('misc/form.js');
+  drupal_add_js('misc/collapse.js');
+  $object = $variables['object'];
+  $repository = $object->repository;
+  // We should eventually remove the DC object and dc_array code as it only
+  // exists to not break legacy implementations
   try {
-    $dc = $islandora_object['DC']->content;
-    $dc_object = DublinCore::importFromXMLString($dc);
+    if (isset($object['DC']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object['DC'])) {
+      $dc = $object['DC']->content;
+      $dc_object = DublinCore::importFromXMLString($dc);
+    }
   }
   catch (Exception $e) {
-    drupal_set_message(t('Error retrieving object %s %t', array('%s' => $islandora_object->id, '%t' => $e->getMessage())), 'error', FALSE);
+    drupal_set_message(t('Error retrieving object %s %t', array('%s' => $object->id, '%t' => $e->getMessage())), 'error', FALSE);
   }
   $variables['islandora_dublin_core'] = isset($dc_object) ? $dc_object : NULL;
   $variables['dc_array'] = isset($dc_object) ? $dc_object->asArray() : array();
-  $variables['islandora_object_label'] = $islandora_object->label;
-  $variables['theme_hook_suggestions'][] = 'islandora_web_archive__' . str_replace(':', '_', $islandora_object->id);
-  $variables['parent_collections'] = islandora_get_parents_from_rels_ext($islandora_object);
+  $variables['islandora_object_label'] = $object->label;
+  $variables['theme_hook_suggestions'][] = 'islandora_web_archive__' . str_replace(':', '_', $object->id);
+  $variables['parent_collections'] = islandora_get_parents_from_rels_ext($object);
+  $variables['metadata'] = islandora_retrieve_metadata_markup($object);
+  $variables['description'] = islandora_retrieve_description_markup($object);
+
   global $base_url;
   // Original.
-  if (isset($islandora_object['OBJ'])) {
-    $warc_url = url("islandora/object/{$islandora_object->id}/datastream/OBJ/view", array('absolute' => TRUE));
-    $png_url = url("islandora/object/{$islandora_object->id}/datastream/PNG/{$islandora_object->label}", array('absolute' => TRUE));
-    $pdf_url = url("islandora/object/{$islandora_object->id}/datastream/PDF/{$islandora_object->label}", array('absolute' => TRUE));
-    $csv_url = url("islandora/object/{$islandora_object->id}/datastream/WARC_CSV/{$islandora_object->label}", array('absolute' => TRUE));
+  if (isset($object['OBJ']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object['OBJ'])) {
+    $warc_url = url("islandora/object/{$object->id}/datastream/OBJ/view", array('absolute' => TRUE));
+    $png_url = url("islandora/object/{$object->id}/datastream/PNG/{$object->label}", array('absolute' => TRUE));
+    $pdf_url = url("islandora/object/{$object->id}/datastream/PDF/{$object->label}", array('absolute' => TRUE));
+    $csv_url = url("islandora/object/{$object->id}/datastream/WARC_CSV/{$object->label}", array('absolute' => TRUE));
     $variables['islandora_warc'] = $warc_url;
     $variables['islandora_pdf'] = $pdf_url;
     $variables['islandora_png'] = $png_url;
     $variables['islandora_csv'] = $csv_url;
     $params = array(
-      'title' => $islandora_object->label,
+      'title' => $object->label,
       'path' => $warc_url,
     );
-    $variables['islandora_warc'] = theme('warc', $params);
+    $variables['islandora_warc'] = theme('image', $params);
   }
   // Thumbnail.
-  if (isset($islandora_object['TN'])) {
-    $thumbnail_size_url = url("islandora/object/{$islandora_object->id}/datastream/TN/view");
+  if (isset($object['TN']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object['TN'])) {
+    $thumbnail_size_url = url("islandora/object/{$object->id}/datastream/TN/view");
     $params = array(
-      'title' => $islandora_object->label,
+      'title' => $object->label,
       'path' => $thumbnail_size_url,
     );
     $variables['islandora_thumbnail_img'] = theme('image', $params);
   }
   // Medium size.
-  if (isset($islandora_object['JPG'])) {
-    $medium_size_url = url("islandora/object/{$islandora_object->id}/datastream/JPG/view");
+  if (isset($object['JPG']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object['JPG'])) {
+    $medium_size_url = url("islandora/object/{$object->id}/datastream/JPG/view");
     $params = array(
       'title' => $islandora_object->label,
       'path' => $medium_size_url,
@@ -71,52 +79,52 @@ function islandora_web_archive_preprocess_islandora_web_archive(&$variables) {
     }
   }
   // Download warc.
-  if (isset($islandora_object['OBJ'])) {
-    $warc_url = url("islandora/object/{$islandora_object->id}/datastream/OBJ/{$islandora_object->label}.warc", array('absolute' => TRUE));
+  if (isset($object['OBJ']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object['OBJ'])) {
+    $warc_url = url("islandora/object/{$object->id}/datastream/OBJ/{$object->label}.warc", array('absolute' => TRUE));
     $params = array(
-      'title' => $islandora_object->label,
+      'title' => $object->label,
       'path' => $warc_url,
     );
-    $variables['islandora_warc'] = theme('warc', $params);
+    $variables['islandora_warc'] = theme('image', $params);
     if (isset($warc_url)) {
       $variables['islandora_warc'] = l($variables['islandora_object_label'] . '.warc', $warc_url, array('html' => TRUE));
     }
   }
 
   // Download pdf.
-  if (isset($islandora_object['PDF'])) {
-    $pdf_url = url("islandora/object/{$islandora_object->id}/datastream/PDF/{$islandora_object->label}.pdf", array('absolute' => TRUE));
+  if (isset($object['PDF']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object['PDF'])) {
+    $pdf_url = url("islandora/object/{$object->id}/datastream/PDF/{$object->label}.pdf", array('absolute' => TRUE));
     $params = array(
-      'title' => $islandora_object->label,
+      'title' => $object->label,
       'path' => $pdf_url,
     );
-    $variables['islandora_pdf'] = theme('warc', $params);
+    $variables['islandora_pdf'] = theme('image', $params);
     if (isset($pdf_url)) {
       $variables['islandora_pdf'] = l($variables['islandora_object_label'] . '.pdf', $pdf_url, array('html' => TRUE));
     }
   }
 
   // Download screenshot.
-  if (isset($islandora_object['PNG'])) {
-    $png_url = url("islandora/object/{$islandora_object->id}/datastream/PNG/{$islandora_object->label}.png", array('absolute' => TRUE));
+  if (isset($object['PNG']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object['PNG'])) {
+    $png_url = url("islandora/object/{$object->id}/datastream/PNG/{$object->label}.png", array('absolute' => TRUE));
     $params = array(
-      'title' => $islandora_object->label,
+      'title' => $object->label,
       'path' => $png_url,
     );
-    $variables['islandora_png'] = theme('warc', $params);
+    $variables['islandora_png'] = theme('image', $params);
     if (isset($png_url)) {
       $variables['islandora_png'] = l($variables['islandora_object_label'] . '.png', $png_url, array('html' => TRUE));
     }
   }
 
   // Download CSV.
-  if (isset($islandora_object['WARC_CSV'])) {
-    $csv_url = url("islandora/object/{$islandora_object->id}/datastream/WARC_CSV/{$islandora_object->label}.csv", array('absolute' => TRUE));
+  if (isset($object['WARC_CSV']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object['WARC_CSV'])) {
+    $csv_url = url("islandora/object/{$object->id}/datastream/WARC_CSV/{$object->label}.csv", array('absolute' => TRUE));
     $params = array(
-      'title' => $islandora_object->label,
+      'title' => $object->label,
       'path' => $csv_url,
     );
-    $variables['islandora_csv'] = theme('warc', $params);
+    $variables['islandora_csv'] = theme('image', $params);
     if (isset($csv_url)) {
       $variables['islandora_csv'] = l($variables['islandora_object_label'] . '.csv', $csv_url, array('html' => TRUE));
     }

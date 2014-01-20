@@ -73,3 +73,7 @@ body.two-sidebars .islandora-web-archive-sidebar {
   }
   
 }
+
+dl.islandora-metadata-fields {
+  width: 100%;
+}
