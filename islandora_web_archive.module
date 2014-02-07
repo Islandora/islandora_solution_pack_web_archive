@@ -130,15 +130,6 @@ function islandora_web_archive_islandora_sp_web_archive_islandora_view_object($o
 }
 
 /**
- * Implements hook_CMODEL_PID_islandora_object_ingested().
- */
-function islandora_web_archive_islandora_sp_web_archive_islandora_object_ingested($object) {
-  module_load_include('inc', 'islandora_web_archive', 'includes/derivatives');
-  islandora_web_archive_create_image_derivatives($object);
-  islandora_web_archive_create_warc_derivatives($object);
-}
-
-/**
  * Implements hook_islandora_ingest_steps().
  */
 function islandora_web_archive_islandora_sp_web_archive_islandora_ingest_steps() {
@@ -149,6 +140,50 @@ function islandora_web_archive_islandora_sp_web_archive_islandora_ingest_steps()
       'form_id' => 'islandora_web_archive_upload_form',
       'module' => 'islandora_web_archive',
       'file' => 'includes/web_archive_upload.form.inc',
+    ),
+  );
+}
+
+/**
+ * Implements hook_islandora_CMODEL_PID_derivative().
+ */
+function islandora_web_archive_islandora_sp_web_archive_islandora_derivative() {
+  return array(
+    array(
+      'source_dsid' => 'OBJ',
+      'destination_dsid' => 'WARC_CSV',
+      'weight' => '0',
+      'function' => array(
+        'islandora_web_archive_create_warc_csv_derivative',
+      ),
+      'file' => drupal_get_path('module', 'islandora_web_archive') . '/includes/derivatives.inc',
+    ),
+    array(
+      'source_dsid' => 'OBJ',
+      'destination_dsid' => 'WARC_FILTER',
+      'weight' => '1',
+      'function' => array(
+        'islandora_web_archive_create_warc_filter_derivative',
+      ),
+      'file' => drupal_get_path('module', 'islandora_web_archive') . '/includes/derivatives.inc',
+    ),
+    array(
+      'source_dsid' => 'PNG',
+      'destination_dsid' => 'JPG',
+      'weight' => '2',
+      'function' => array(
+        'islandora_web_archive_create_JPG_derivative',
+      ),
+      'file' => drupal_get_path('module', 'islandora_web_archive') . '/includes/derivatives.inc',
+    ),
+    array(
+      'source_dsid' => 'PNG',
+      'destination_dsid' => 'TN',
+      'weight' => '3',
+      'function' => array(
+        'islandora_web_archive_create_TN_derivative',
+      ),
+      'file' => drupal_get_path('module', 'islandora_web_archive') . '/includes/derivatives.inc',
     ),
   );
 }

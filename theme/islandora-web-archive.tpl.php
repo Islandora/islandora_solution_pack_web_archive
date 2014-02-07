@@ -20,16 +20,16 @@
     <div>
       <h2><?php print t('Download'); ?></h2>
         <ul>
-          <?php $result = drupal_http_request($islandora_warc); if(in_array($result->code, array(-1002, 200))): ?>
+          <?php if (isset($islandora_warc)): ?>
             <li>Warc: <?php print $islandora_warc; ?>
           <?php endif; ?>
-          <?php $result = drupal_http_request($islandora_pdf); if(in_array($result->code, array(-1002, 200))): ?>  
+          <?php if (isset($islandora_pdf)): ?>
             <li>PDF: <?php print $islandora_pdf; ?>
           <?php endif; ?>
-          <?php $result = drupal_http_request($islandora_png); if(in_array($result->code, array(-1002, 200))): ?>
+          <?php if (isset($islandora_png)): ?>
             <li>Screenshot: <?php print $islandora_png; ?>
           <?php endif; ?>
-          <?php $result = drupal_http_request($islandora_csv); if(in_array($result->code, array(-1002, 200))): ?>
+          <?php if (isset($islandora_csv)): ?>
             <li>CSV: <?php print $islandora_csv; ?>
           <?php endif; ?>
         </ul>
