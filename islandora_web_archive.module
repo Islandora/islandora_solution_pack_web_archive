@@ -160,7 +160,7 @@ function islandora_web_archive_islandora_sp_web_archive_islandora_derivative() {
     ),
     array(
       'source_dsid' => 'OBJ',
-      'destination_dsid' => 'WARC_FILTER',
+      'destination_dsid' => 'WARC_FILTERED',
       'weight' => '1',
       'function' => array(
         'islandora_web_archive_create_warc_filter_derivative',

@@ -269,7 +269,7 @@ function islandora_web_archive_create_warc_csv_derivative(AbstractObject $object
  * @see hook_islandora_derivative()
  */
 function islandora_web_archive_create_warc_filter_derivative(AbstractObject $object, $force = TRUE) {
-  if ($force || !isset($object['WARC_FILTER'])) {
+  if ($force || !isset($object['WARC_FILTERED'])) {
     if (!isset($object['OBJ'])) {
       return array(
         'success' => FALSE,
@@ -287,7 +287,7 @@ function islandora_web_archive_create_warc_filter_derivative(AbstractObject $obj
       $warc_name = str_replace(':', '-', $object->id);
       $uploaded_warc = islandora_web_archive_get_uploaded_warc($object, $warc_name);
       $warcfilter = variable_get('islandora_web_archive_warcfilter_path', '/usr/local/bin/warcfilter');
-      $filtered_file = drupal_realpath("temporary://{$warc_name}_WARC_FILTER.warc");
+      $filtered_file = drupal_realpath("temporary://{$warc_name}_WARC_FILTERED.warc");
       $warc_file = drupal_realpath($uploaded_warc);
       $command = "$warcfilter -H text $warc_file > $filtered_file";
       $derivative_file = exec($command, $output);
@@ -297,7 +297,7 @@ function islandora_web_archive_create_warc_filter_derivative(AbstractObject $obj
           'success' => FALSE,
           'messages' => array(
             array(
-              'message' => t('warcfilter failed for object @pid - WARC_FILTER creation was skipped.'),
+              'message' => t('warcfilter failed for object @pid - WARC_FILTERED creation was skipped.'),
               'message_sub' => array('@pid' => $object->id),
               'type' => 'watchdog',
               'severity' => WATCHDOG_ERROR,
@@ -306,7 +306,7 @@ function islandora_web_archive_create_warc_filter_derivative(AbstractObject $obj
         );
       }
       else {
-        return islandora_web_archive_add_datastream($object, 'WARC_FILTER', $filtered_file, 'application/warc', t('WARC Index'));
+        return islandora_web_archive_add_datastream($object, 'WARC_FILTERED', $filtered_file, 'application/warc', t('WARC Filtered'));
       }
     }
   }
