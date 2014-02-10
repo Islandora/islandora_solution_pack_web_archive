@@ -125,17 +125,8 @@ function islandora_web_archive_islandora_xml_form_builder_form_associations() {
  * Implements hook_CMODEL_PID_islandora_view_object().
  */
 function islandora_web_archive_islandora_sp_web_archive_islandora_view_object($object, $page_number, $page_size) {
-  $output = theme('islandora_web_archive', array('islandora_object' => $object));
+  $output = theme('islandora_web_archive', array('object' => $object));
   return array('' => $output);
-}
-
-/**
- * Implements hook_CMODEL_PID_islandora_object_ingested().
- */
-function islandora_web_archive_islandora_sp_web_archive_islandora_object_ingested($object) {
-  module_load_include('inc', 'islandora_web_archive', 'includes/derivatives');
-  islandora_web_archive_create_image_derivatives($object);
-  islandora_web_archive_create_warc_derivatives($object);
 }
 
 /**
@@ -149,6 +140,50 @@ function islandora_web_archive_islandora_sp_web_archive_islandora_ingest_steps()
       'form_id' => 'islandora_web_archive_upload_form',
       'module' => 'islandora_web_archive',
       'file' => 'includes/web_archive_upload.form.inc',
+    ),
+  );
+}
+
+/**
+ * Implements hook_islandora_CMODEL_PID_derivative().
+ */
+function islandora_web_archive_islandora_sp_web_archive_islandora_derivative() {
+  return array(
+    array(
+      'source_dsid' => 'OBJ',
+      'destination_dsid' => 'WARC_CSV',
+      'weight' => '0',
+      'function' => array(
+        'islandora_web_archive_create_warc_csv_derivative',
+      ),
+      'file' => drupal_get_path('module', 'islandora_web_archive') . '/includes/derivatives.inc',
+    ),
+    array(
+      'source_dsid' => 'OBJ',
+      'destination_dsid' => 'WARC_FILTERED',
+      'weight' => '1',
+      'function' => array(
+        'islandora_web_archive_create_warc_filter_derivative',
+      ),
+      'file' => drupal_get_path('module', 'islandora_web_archive') . '/includes/derivatives.inc',
+    ),
+    array(
+      'source_dsid' => 'PNG',
+      'destination_dsid' => 'JPG',
+      'weight' => '2',
+      'function' => array(
+        'islandora_web_archive_create_JPG_derivative',
+      ),
+      'file' => drupal_get_path('module', 'islandora_web_archive') . '/includes/derivatives.inc',
+    ),
+    array(
+      'source_dsid' => 'PNG',
+      'destination_dsid' => 'TN',
+      'weight' => '3',
+      'function' => array(
+        'islandora_web_archive_create_TN_derivative',
+      ),
+      'file' => drupal_get_path('module', 'islandora_web_archive') . '/includes/derivatives.inc',
     ),
   );
 }

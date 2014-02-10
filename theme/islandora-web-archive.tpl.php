@@ -14,24 +14,22 @@
         <?php print $islandora_content; ?>
       </div>
     <?php endif; ?>
-  <div class="islandora-web-archive-sidebar">
-    <?php if (!empty($dc_array['dc:description']['value'])): ?>
-      <h2><?php print $dc_array['dc:description']['label']; ?></h2>
-      <p><?php print $dc_array['dc:description']['value']; ?></p>
-    <?php endif; ?>
+    </div>
+    <div class="islandora-web-archive-metadata">
+      <?php print $description; ?>
     <div>
       <h2><?php print t('Download'); ?></h2>
         <ul>
-          <?php $result = drupal_http_request($islandora_warc); if(in_array($result->code, array(-1002, 200))): ?>
+          <?php if (isset($islandora_warc)): ?>
             <li>Warc: <?php print $islandora_warc; ?>
           <?php endif; ?>
-          <?php $result = drupal_http_request($islandora_pdf); if(in_array($result->code, array(-1002, 200))): ?>  
+          <?php if (isset($islandora_pdf)): ?>
             <li>PDF: <?php print $islandora_pdf; ?>
           <?php endif; ?>
-          <?php $result = drupal_http_request($islandora_png); if(in_array($result->code, array(-1002, 200))): ?>
+          <?php if (isset($islandora_png)): ?>
             <li>Screenshot: <?php print $islandora_png; ?>
           <?php endif; ?>
-          <?php $result = drupal_http_request($islandora_csv); if(in_array($result->code, array(-1002, 200))): ?>
+          <?php if (isset($islandora_csv)): ?>
             <li>CSV: <?php print $islandora_csv; ?>
           <?php endif; ?>
         </ul>
@@ -46,23 +44,6 @@
         </ul>
       </div>
     <?php endif; ?>
+    <?php print $metadata; ?>
   </div>
-  </div>
-  <fieldset class="collapsible collapsed islandora-web-archive-metadata">
-  <legend><span class="fieldset-legend"><?php print t('Details'); ?></span></legend>
-    <div class="fieldset-wrapper">
-      <dl class="islandora-inline-metadata islandora-web-archive-fields">
-        <?php $row_field = 0; ?>
-        <?php foreach($dc_array as $key => $value): ?>
-          <dt class="<?php print $value['class']; ?><?php print $row_field == 0 ? ' first' : ''; ?>">
-            <?php print $value['label']; ?>
-          </dt>
-          <dd class="<?php print $value['class']; ?><?php print $row_field == 0 ? ' first' : ''; ?>">
-            <?php print $value['value']; ?>
-          </dd>
-          <?php $row_field++; ?>
-        <?php endforeach; ?>
-      </dl>
-    </div>
-  </fieldset>
 </div>
