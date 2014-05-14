@@ -18,9 +18,9 @@ Install as usual, see [this](https://drupal.org/documentation/install/modules-th
 
 ## Configuration
 
-Set the paths for `warcindex` and `warcfilter` in Administration » Islandora » Web ARChive Collection (admin/islandora/web_archive).
+Set the paths for `warcindex` and `warcfilter` in Administration » Islandora » Solution pack configuation » Web ARChives (admin/islandora/solution_pack_config/web_archive).
 
-[![Configuration](http://i.imgur.com/tP7djFl.png)](http://i.imgur.com/tP7djFl.png)
+![Configuration](https://camo.githubusercontent.com/56c6e4c7005e9be0278443296fea27b7f2f929bd/687474703a2f2f692e696d6775722e636f6d2f745037646a466c2e706e67)
 
 ## Troubleshooting
 

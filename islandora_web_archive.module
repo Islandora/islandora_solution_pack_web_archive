@@ -10,8 +10,8 @@
  */
 function islandora_web_archive_menu() {
   $items = array();
-  $items['admin/islandora/web_archive'] = array(
-    'title' => 'Web ARChive Collection',
+  $items['admin/islandora/solution_pack_config/web_archive'] = array(
+    'title' => 'Web ARChives',
     'description' => 'Configure the Web ARChive Solution Pack.',
     'page callback' => 'drupal_get_form',
     'access arguments' => array('administer site configuration'),
