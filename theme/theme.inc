@@ -41,6 +41,7 @@ function islandora_web_archive_preprocess_islandora_web_archive(array &$variable
     $warc_url = url("islandora/object/{$object->id}/datastream/OBJ/view", array('absolute' => TRUE));
     $variables['islandora_warc'] = $warc_url;
   }
+
   // Thumbnail.
   if (isset($object['TN']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object['TN'])) {
     $thumbnail_size_url = url("islandora/object/{$object->id}/datastream/TN/view");
@@ -50,21 +51,7 @@ function islandora_web_archive_preprocess_islandora_web_archive(array &$variable
     );
     $variables['islandora_thumbnail_img'] = theme('image', $params);
   }
-  // Medium size.
-  if (isset($object['JPG']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object['JPG'])) {
-    $medium_size_url = url("islandora/object/{$object->id}/datastream/JPG/view");
-    $params = array(
-      'title' => $object->label,
-      'path' => $medium_size_url,
-    );
-    $variables['islandora_medium_img'] = theme('image', $params);
-    if (isset($medium_size_url)) {
-      $variables['islandora_content'] = l($variables['islandora_medium_img'], $medium_size_url, array('html' => TRUE));
-    }
-    else {
-      $variables['islandora_content'] = $variables['islandora_medium_img'];
-    }
-  }
+
   // Download warc.
   if (isset($object['OBJ']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object['OBJ'])) {
     $warc_url = url("islandora/object/{$object->id}/datastream/OBJ/{$object->label}.warc", array('absolute' => TRUE));
@@ -87,5 +74,21 @@ function islandora_web_archive_preprocess_islandora_web_archive(array &$variable
   if (isset($object['WARC_CSV']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object['WARC_CSV'])) {
     $csv_url = url("islandora/object/{$object->id}/datastream/WARC_CSV/{$object->label}.csv", array('absolute' => TRUE));
     $variables['islandora_csv'] = l($variables['islandora_object_label'] . '.csv', $csv_url, array('html' => TRUE));
+  }
+
+  // Medium size.
+  if (isset($object['JPG']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object['JPG'])) {
+    $medium_size_url = url("islandora/object/{$object->id}/datastream/JPG/view");
+    $params = array(
+      'title' => $object->label,
+      'path' => $medium_size_url,
+    );
+    $variables['islandora_medium_img'] = theme('image', $params);
+    if (isset($medium_size_url)) {
+      $variables['islandora_content'] = l($variables['islandora_medium_img'], $png_url, array('html' => TRUE));
+    }
+    else {
+      $variables['islandora_content'] = $variables['islandora_medium_img'];
+    }
   }
 }
