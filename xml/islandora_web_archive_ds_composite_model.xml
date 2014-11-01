@@ -35,6 +35,8 @@
   <dsTypeModel ID="TN" optional="true">
     <form MIME="image/jpeg"/>
     <form MIME="image/jpg"/>
+    <form MIME="image/png"/>
+    <form MIME="image/gif"/>
   </dsTypeModel>
   <dsTypeModel ID="MEDIUM_SIZE" optional="true">
     <form MIME="image/jpeg"/>
