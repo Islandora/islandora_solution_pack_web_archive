@@ -53,7 +53,7 @@ function islandora_web_archive_islandora_required_objects(IslandoraTuque $connec
   // DS-COMPOSITE-MODEL Datastream.
   $datastream = $web_archive_content_model->constructDatastream('DS-COMPOSITE-MODEL', 'X');
   $datastream->label = 'DS-COMPOSITE-MODEL';
-  $datastream->mimetype = 'text/xml';
+  $datastream->mimetype = 'application/xml';
   $datastream->setContentFromFile("$module_path/xml/islandora_web_archive_ds_composite_model.xml", FALSE);
   $web_archive_content_model->ingestDatastream($datastream);
   // Web ARChive Collection.
@@ -65,7 +65,7 @@ function islandora_web_archive_islandora_required_objects(IslandoraTuque $connec
   // Collection Policy Datastream.
   $datastream = $web_archive_collection->constructDatastream('COLLECTION_POLICY', 'X');
   $datastream->label = 'Collection policy';
-  $datastream->mimetype = 'text/xml';
+  $datastream->mimetype = 'application/xml';
   $datastream->setContentFromFile("$module_path/xml/islandora_web_archive_collection_policy.xml", FALSE);
   $web_archive_collection->ingestDatastream($datastream);
   // TN Datastream.
