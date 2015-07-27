@@ -39,11 +39,11 @@ function islandora_web_archive_upload_form(array $form, array &$form_state) {
   $form['screenshot_file'] = array(
     '#title' => t('Screenshot'),
     '#type' => 'managed_file',
-    '#description' => t('Select screenshot to upload.<br/>Files must be less than <b>@size MB.</b><br/>Allowed file types: <b>PNG.</b>', array('@size' => $upload_size)),
+    '#description' => t('Select screenshot to upload.<br/>Files must be less than <b>@size MB.</b><br/>Allowed file types: <b>JPEG, JPG, PNG.</b>', array('@size' => $upload_size)),
     '#default_value' => isset($form_state['values']['screenshot_file']) ? $form_state['values']['screenshot_file'] : NULL,
     '#upload_location' => 'temporary://',
     '#upload_validators' => array(
-      'file_validate_extensions' => array('png'),
+      'file_validate_extensions' => array('jpg jpeg png'),
       // Assume its specified in MB.
       'file_validate_size' => array($upload_size * 1024 * 1024),
     ),
