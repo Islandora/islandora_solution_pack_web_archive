@@ -13,15 +13,17 @@
  *   The object to fetch the uploaded image file from.
  * @param string $base_name
  *   The base name to use in creating temp files.
+ * @param string $dsid
+ *   Datastream to get the image from.
  *
  * @return string
  *   The file path to the temp file if successful, otherwise FALSE.
  */
-function islandora_web_archive_get_uploaded_png(AbstractObject $object, $base_name) {
+function islandora_web_archive_get_uploaded_image(AbstractObject $object, $base_name, $dsid = 'SCREENSHOT') {
   $mime_detector = new MimeDetect();
-  $ext = $mime_detector->getExtension($object['PNG']->mimeType);
-  $filename = file_create_filename("{$base_name}_PNG.{$ext}", 'temporary://');
-  $object['PNG']->getContent($filename);
+  $ext = $mime_detector->getExtension($object[$dsid]->mimeType);
+  $filename = file_create_filename("{$base_name}_SCREENSHOT.{$ext}", 'temporary://');
+  $object[$dsid]->getContent($filename);
   return $filename;
 }
 
@@ -56,12 +58,12 @@ function islandora_web_archive_create_JPG_derivative(AbstractObject $object, $fo
     }
     else {
       $base_name = str_replace(':', '-', $object->id);
-      $uploaded_png = islandora_web_archive_get_uploaded_png($object, $base_name);
+      $upload_screenshot = islandora_web_archive_get_uploaded_image($object, $base_name);
       $args = array();
       $args[] = '-resize ' . escapeshellarg("600 x 800");
       $args[] = '-quality ' . escapeshellarg(variable_get('imagemagick_quality', 75));
-      $derivative_file = islandora_web_archive_imagemagick_convert($uploaded_png, "temporary://{$base_name}_MED.jpg", $args);
-      file_unmanaged_delete($uploaded_png);
+      $derivative_file = islandora_web_archive_imagemagick_convert($upload_screenshot, "temporary://{$base_name}_MED.jpg", $args);
+      file_unmanaged_delete($upload_screenshot);
       if ($derivative_file === FALSE) {
         return array(
           'success' => FALSE,
@@ -113,12 +115,12 @@ function islandora_web_archive_create_TN_derivative(AbstractObject $object, $for
     }
     else {
       $base_name = str_replace(':', '-', $object->id);
-      $uploaded_png = islandora_web_archive_get_uploaded_png($object, $base_name);
+      $upload_screenshot = islandora_web_archive_get_uploaded_image($object, $base_name);
       $args = array();
       $args[] = '-quality ' . escapeshellarg(variable_get('imagemagick_quality', 75));
       $args[] = '-resize ' . escapeshellarg("200 x 200");
-      $derivative_file = islandora_web_archive_imagemagick_convert($uploaded_png, "temporary://{$base_name}_TN.jpg", $args);
-      file_unmanaged_delete($uploaded_png);
+      $derivative_file = islandora_web_archive_imagemagick_convert($upload_screenshot, "temporary://{$base_name}_TN.jpg", $args);
+      file_unmanaged_delete($upload_screenshot);
       if ($derivative_file === FALSE) {
         return array(
           'success' => FALSE,

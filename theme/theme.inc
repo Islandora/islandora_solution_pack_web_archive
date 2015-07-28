@@ -65,7 +65,15 @@ function islandora_web_archive_preprocess_islandora_web_archive(array &$variable
   }
 
   // Download screenshot.
-  if (isset($object['PNG']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object['PNG'])) {
+  module_load_include('inc', 'islandora', 'includes/mimetype.utils');
+  if (isset($object['SCREENSHOT']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object['SCREENSHOT'])) {
+    $mimetype = islandora_get_extension_for_mimetype($object['SCREENSHOT']->mimetype);
+    $png_url = url("islandora/object/{$object->id}/datastream/SCREENSHOT/{$object->label}.{$mimetype}", array('absolute' => TRUE));
+    // TODO: update theme variable?  FILE NAME?
+    $variables['islandora_screenshot'] = l($variables['islandora_object_label']  . '.' . $mimetype, $png_url, array('html' => TRUE));
+  }
+  // XXX: Legacy
+  else if (!isset($object['SCREENSHOT']) && isset($object['PNG']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object['PNG'])) {
     $png_url = url("islandora/object/{$object->id}/datastream/PNG/{$object->label}.png", array('absolute' => TRUE));
     $variables['islandora_png'] = l($variables['islandora_object_label'] . '.png', $png_url, array('html' => TRUE));
   }

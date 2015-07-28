@@ -122,19 +122,19 @@ function islandora_web_archive_upload_form_submit(array $form, array &$form_stat
     $warc_ds->label = $warc_file->filename;
     $warc_ds->mimetype = $warc_file->filemime;
   }
-  // See if there's an attached PNG to process.
+  // See if there's an attached screenshot image to process.
   if ($form_state['values']['upload_screenshot']) {
-    if (empty($object['PNG'])) {
-      $png_ds = $object->constructDatastream('PNG', 'M');
-      $object->ingestDatastream($png_ds);
+    if (empty($object['SCREENSHOT'])) {
+      $screenshot_ds = $object->constructDatastream('SCREENSHOT', 'M');
+      $object->ingestDatastream($screenshot_ds);
     }
     else {
-      $png_ds = $object['PNG'];
+      $screenshot_ds = $object['SCREENSHOT'];
     }
-    $png_file = file_load($form_state['values']['screenshot_file']);
-    $png_ds->setContentFromFile($png_file->uri, FALSE);
-    $png_ds->label = $png_file->filename;
-    $png_ds->mimetype = $png_file->filemime;
+    $image_file = file_load($form_state['values']['screenshot_file']);
+    $screenshot_ds->setContentFromFile($image_file->uri, FALSE);
+    $screenshot_ds->label = $image_file->filename;
+    $screenshot_ds->mimetype = $image_file->filemime;
   }
   // See if there's an uploaded PDF to process.
   if ($form_state['values']['upload_pdf']) {
