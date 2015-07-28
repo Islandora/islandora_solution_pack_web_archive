@@ -44,7 +44,11 @@ EOQ;
     // Create a new SCREENSHOT ds from PNG ds if one is not already created.
     if (!isset($obj['SCREENSHOT']) && isset($obj['PNG'])) {
       islandora_web_archive_clone_datastream($obj, $obj['PNG'], 'SCREENSHOT');
-      drush_print(dt("Object:!pid PNG datastream has been migrated to SCREENSHOT datastream.\n", array('!pid' => $pid['pid']['value'])));
+      drush_print(dt("Successfully migrated !SRC to !DEST datastream for object: !PID.\n", array(
+        '!PID' => $pid['pid']['value'],
+        '!SRC' => 'PNG',
+        '!DEST' => 'SCREENSHOT',
+      )));
     }
   }
 }
