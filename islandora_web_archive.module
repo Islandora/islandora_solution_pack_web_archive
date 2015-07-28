@@ -183,11 +183,11 @@ function islandora_web_archive_islandora_sp_web_archive_islandora_derivative() {
 }
 
 /**
- * hook_cmodel_pid_dsid_islandora_datastream_alter.
+ * Implements hook_cmodel_pid_dsid_islandora_datastream_alter().
  */
-
 function islandora_web_archive_islandora_sp_web_archive_png_islandora_datastream_alter(AbstractObject $object, AbstractDatastream $datastream, array &$context) {
-  // if the png datastream is updated create / update Screenshot dsid.
+  // When the PNG datastream is updated update the screenshot datastream with
+  // the updated PNG file.
   if ($context['action'] == 'ingest') {
     if (!isset($object['SCREENSHOT'])) {
       module_load_include('inc', 'islandora_web_archive', 'includes/utilities');
