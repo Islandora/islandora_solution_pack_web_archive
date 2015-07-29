@@ -29,9 +29,6 @@
           <?php if (isset($islandora_screenshot)): ?>
             <li>Screenshot: <?php print $islandora_screenshot; ?>
           <?php endif; ?>
-          <?php if (!isset($islandora_screenshot) && isset($islandora_png)): ?>
-            <li>Screenshot: <?php print $islandora_png; ?>
-          <?php endif; ?>
           <?php if (isset($islandora_csv)): ?>
             <li>CSV: <?php print $islandora_csv; ?>
           <?php endif; ?>

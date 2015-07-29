@@ -181,39 +181,3 @@ function islandora_web_archive_islandora_sp_web_archive_islandora_derivative() {
     ),
   );
 }
-
-/**
- * Implements hook_cmodel_pid_dsid_islandora_datastream_alter().
- */
-function islandora_web_archive_islandora_sp_web_archive_png_islandora_datastream_alter(AbstractObject $object, AbstractDatastream $datastream, array &$context) {
-  // When the PNG datastream is updated update the screenshot datastream with
-  // the updated PNG file.
-  if ($context['action'] == 'ingest') {
-    if (!isset($object['SCREENSHOT'])) {
-      module_load_include('inc', 'islandora_web_archive', 'includes/utilities');
-      islandora_web_archive_clone_datastream($object, $object['PNG'], 'SCREENSHOT');
-    }
-    else {
-      $base_name = str_replace(':', '-', $object->id);
-      module_load_include('inc', 'islandora_web_archive', 'includes/derivatives');
-      $file_uri = islandora_web_archive_get_uploaded_image($object, $base_name, 'PNG');
-      $screenshot_ds = $object['SCREENSHOT'];
-      $screenshot_ds->label = $object['PNG']->label;
-      $screenshot_ds->mimetype = $object['PNG']->mimetype;
-      $screenshot_ds->setContentFromFile($file_uri);
-    }
-  }
-  elseif ($context['action'] == 'modify') {
-    module_load_include('inc', 'islandora', 'includes/mimetype.utils');
-    if (empty($object['SCREENSHOT'])) {
-      $screenshot_ds = $object->constructDatastream('SCREENSHOT');
-      $object->ingestDatastream($screenshot_ds);
-    }
-    else {
-      $screenshot_ds = $object['SCREENSHOT'];
-    }
-    $screenshot_ds->label = drupal_basename($context['params']['dsFile']);
-    $screenshot_ds->mimetype = file_get_mimetype($context['params']['dsFile']);
-    $screenshot_ds->setContentFromFile($context['params']['dsFile']);
-  }
-}

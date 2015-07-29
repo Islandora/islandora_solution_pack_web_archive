@@ -13,17 +13,15 @@
  *   The object to fetch the uploaded image file from.
  * @param string $base_name
  *   The base name to use in creating temp files.
- * @param string $dsid
- *   Datastream to get the image from.
  *
  * @return string
  *   The file path to the temp file if successful, otherwise FALSE.
  */
-function islandora_web_archive_get_uploaded_image(AbstractObject $object, $base_name, $dsid = 'SCREENSHOT') {
+function islandora_web_archive_get_uploaded_screenshot(AbstractObject $object, $base_name) {
   $mime_detector = new MimeDetect();
-  $ext = $mime_detector->getExtension($object[$dsid]->mimeType);
+  $ext = $mime_detector->getExtension($object['SCREENSHOT']->mimeType);
   $filename = file_create_filename("{$base_name}_SCREENSHOT.{$ext}", 'temporary://');
-  $object[$dsid]->getContent($filename);
+  $object['SCREENSHOT']->getContent($filename);
   return $filename;
 }
 
@@ -58,7 +56,7 @@ function islandora_web_archive_create_JPG_derivative(AbstractObject $object, $fo
     }
     else {
       $base_name = str_replace(':', '-', $object->id);
-      $upload_screenshot = islandora_web_archive_get_uploaded_image($object, $base_name);
+      $upload_screenshot = islandora_web_archive_get_uploaded_screenshot($object, $base_name);
       $args = array();
       $args[] = '-resize ' . escapeshellarg("600 x 800");
       $args[] = '-quality ' . escapeshellarg(variable_get('imagemagick_quality', 75));
@@ -115,7 +113,7 @@ function islandora_web_archive_create_TN_derivative(AbstractObject $object, $for
     }
     else {
       $base_name = str_replace(':', '-', $object->id);
-      $upload_screenshot = islandora_web_archive_get_uploaded_image($object, $base_name);
+      $upload_screenshot = islandora_web_archive_get_uploaded_screenshot($object, $base_name);
       $args = array();
       $args[] = '-quality ' . escapeshellarg(variable_get('imagemagick_quality', 75));
       $args[] = '-resize ' . escapeshellarg("200 x 200");
