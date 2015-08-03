@@ -8,14 +8,14 @@
 /**
  * Clones datastream within same object.
  *
- * @param abstractObject $object
+ * @param AbstractObject $object
  *   Object containing datastream to be cloned.
- * @param string $existing_datastream
- *   DSID of an existing datastream to be cloned.
+ * @param AbstractDatastream $existing_datastream
+ *   The datastream to be cloned.
  * @param string $new_dsid
  *   DSID of new datastream.
  */
-function islandora_web_archive_clone_datastream($object, $existing_datastream, $new_dsid) {
+function islandora_web_archive_clone_datastream(AbstractObject $object, AbstractDatastream $existing_datastream, $new_dsid) {
   $temp_file = drupal_tempnam('temporary://', 'datastream');
   $existing_datastream->getContent($temp_file);
   $new_datastream = $object->constructDatastream($new_dsid);
