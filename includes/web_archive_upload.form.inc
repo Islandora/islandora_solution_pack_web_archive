@@ -23,7 +23,7 @@ function islandora_web_archive_upload_form(array $form, array &$form_state) {
     '#title' => t('Warc'),
     '#type' => 'managed_file',
     '#required' => TRUE,
-    '#description' => t('Select warc to upload.<br/>Files must be less than <b>@size MB.</b><br/>Allowed file types: <b>@ext.</b>', array('@size' => $upload_size, '@ext' => $extensions[0])),
+    '#description' => t('Select warc to upload.<br/>Files must be less than <strong>@size MB.</strong><br/>Allowed file types: <strong>@ext.</strong>', array('@size' => $upload_size, '@ext' => $extensions[0])),
     '#default_value' => isset($form_state['values']['warc_file']) ? $form_state['values']['warc_file'] : NULL,
     '#upload_location' => 'temporary://',
     '#upload_validators' => array(
@@ -39,11 +39,11 @@ function islandora_web_archive_upload_form(array $form, array &$form_state) {
   $form['screenshot_file'] = array(
     '#title' => t('Screenshot'),
     '#type' => 'managed_file',
-    '#description' => t('Select screenshot to upload.<br/>Files must be less than <b>@size MB.</b><br/>Allowed file types: <b>PNG.</b>', array('@size' => $upload_size)),
+    '#description' => t('Select screenshot to upload.<br/>Files must be less than <strong>@size MB.</strong><br/>Allowed file types: <strong>JPEG, JPG, PNG.</strong>', array('@size' => $upload_size)),
     '#default_value' => isset($form_state['values']['screenshot_file']) ? $form_state['values']['screenshot_file'] : NULL,
     '#upload_location' => 'temporary://',
     '#upload_validators' => array(
-      'file_validate_extensions' => array('png'),
+      'file_validate_extensions' => array('jpg jpeg png'),
       // Assume its specified in MB.
       'file_validate_size' => array($upload_size * 1024 * 1024),
     ),
@@ -60,7 +60,7 @@ function islandora_web_archive_upload_form(array $form, array &$form_state) {
   $form['pdf_file'] = array(
     '#title' => t('PDF'),
     '#type' => 'managed_file',
-    '#description' => t('Select screenshot to upload.<br/>Files must be less than <b>@size MB.</b><br/>Allowed file types: <b>PDF.</b>', array('@size' => $upload_size)),
+    '#description' => t('Select screenshot to upload.<br/>Files must be less than <strong>@size MB.</strong><br/>Allowed file types: <strong>PDF.</strong>', array('@size' => $upload_size)),
     '#default_value' => isset($form_state['values']['pdf_file']) ? $form_state['values']['pdf_file'] : NULL,
     '#upload_location' => 'temporary://',
     '#upload_validators' => array(
@@ -122,19 +122,19 @@ function islandora_web_archive_upload_form_submit(array $form, array &$form_stat
     $warc_ds->label = $warc_file->filename;
     $warc_ds->mimetype = $warc_file->filemime;
   }
-  // See if there's an attached PNG to process.
+  // See if there's an attached screenshot image to process.
   if ($form_state['values']['upload_screenshot']) {
-    if (empty($object['PNG'])) {
-      $png_ds = $object->constructDatastream('PNG', 'M');
-      $object->ingestDatastream($png_ds);
+    if (empty($object['SCREENSHOT'])) {
+      $screenshot_ds = $object->constructDatastream('SCREENSHOT', 'M');
+      $object->ingestDatastream($screenshot_ds);
     }
     else {
-      $png_ds = $object['PNG'];
+      $screenshot_ds = $object['SCREENSHOT'];
     }
-    $png_file = file_load($form_state['values']['screenshot_file']);
-    $png_ds->setContentFromFile($png_file->uri, FALSE);
-    $png_ds->label = $png_file->filename;
-    $png_ds->mimetype = $png_file->filemime;
+    $image_file = file_load($form_state['values']['screenshot_file']);
+    $screenshot_ds->setContentFromFile($image_file->uri, FALSE);
+    $screenshot_ds->label = $image_file->filename;
+    $screenshot_ds->mimetype = $image_file->filemime;
   }
   // See if there's an uploaded PDF to process.
   if ($form_state['values']['upload_pdf']) {

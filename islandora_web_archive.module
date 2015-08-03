@@ -162,7 +162,7 @@ function islandora_web_archive_islandora_sp_web_archive_islandora_derivative() {
       'file' => drupal_get_path('module', 'islandora_web_archive') . '/includes/derivatives.inc',
     ),
     array(
-      'source_dsid' => 'PNG',
+      'source_dsid' => 'SCREENSHOT',
       'destination_dsid' => 'JPG',
       'weight' => '2',
       'function' => array(
@@ -171,7 +171,7 @@ function islandora_web_archive_islandora_sp_web_archive_islandora_derivative() {
       'file' => drupal_get_path('module', 'islandora_web_archive') . '/includes/derivatives.inc',
     ),
     array(
-      'source_dsid' => 'PNG',
+      'source_dsid' => 'SCREENSHOT',
       'destination_dsid' => 'TN',
       'weight' => '3',
       'function' => array(
