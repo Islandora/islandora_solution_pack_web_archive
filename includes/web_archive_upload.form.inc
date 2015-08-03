@@ -23,7 +23,7 @@ function islandora_web_archive_upload_form(array $form, array &$form_state) {
     '#title' => t('Warc'),
     '#type' => 'managed_file',
     '#required' => TRUE,
-    '#description' => t('Select warc to upload.<br/>Files must be less than <b>@size MB.</b><br/>Allowed file types: <b>@ext.</b>', array('@size' => $upload_size, '@ext' => $extensions[0])),
+    '#description' => t('Select warc to upload.<br/>Files must be less than <strong>@size MB.</strong><br/>Allowed file types: <strong>@ext.</strong>', array('@size' => $upload_size, '@ext' => $extensions[0])),
     '#default_value' => isset($form_state['values']['warc_file']) ? $form_state['values']['warc_file'] : NULL,
     '#upload_location' => 'temporary://',
     '#upload_validators' => array(
@@ -39,7 +39,7 @@ function islandora_web_archive_upload_form(array $form, array &$form_state) {
   $form['screenshot_file'] = array(
     '#title' => t('Screenshot'),
     '#type' => 'managed_file',
-    '#description' => t('Select screenshot to upload.<br/>Files must be less than <b>@size MB.</b><br/>Allowed file types: <b>JPEG, JPG, PNG.</b>', array('@size' => $upload_size)),
+    '#description' => t('Select screenshot to upload.<br/>Files must be less than <strong>@size MB.</strong><br/>Allowed file types: <strong>JPEG, JPG, PNG.</strong>', array('@size' => $upload_size)),
     '#default_value' => isset($form_state['values']['screenshot_file']) ? $form_state['values']['screenshot_file'] : NULL,
     '#upload_location' => 'temporary://',
     '#upload_validators' => array(
@@ -60,7 +60,7 @@ function islandora_web_archive_upload_form(array $form, array &$form_state) {
   $form['pdf_file'] = array(
     '#title' => t('PDF'),
     '#type' => 'managed_file',
-    '#description' => t('Select screenshot to upload.<br/>Files must be less than <b>@size MB.</b><br/>Allowed file types: <b>PDF.</b>', array('@size' => $upload_size)),
+    '#description' => t('Select screenshot to upload.<br/>Files must be less than <strong>@size MB.</strong><br/>Allowed file types: <strong>PDF.</strong>', array('@size' => $upload_size)),
     '#default_value' => isset($form_state['values']['pdf_file']) ? $form_state['values']['pdf_file'] : NULL,
     '#upload_location' => 'temporary://',
     '#upload_validators' => array(

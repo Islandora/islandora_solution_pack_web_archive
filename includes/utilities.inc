@@ -10,8 +10,8 @@
  *
  * @param abstractObject $object
  *   Object containing datastream to be cloned.
- * @param datastream $existing_datastream
- *   Datastream to be cloned.
+ * @param string $existing_datastream
+ *   DSID of an existing datastream to be cloned.
  * @param string $new_dsid
  *   DSID of new datastream.
  */
