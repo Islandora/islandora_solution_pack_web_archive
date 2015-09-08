@@ -41,7 +41,7 @@ function islandora_web_archive_get_uploaded_screenshot(AbstractObject $object, $
  */
 function islandora_web_archive_create_JPG_derivative(AbstractObject $object, $force = TRUE) {
   if ($force || !isset($object['JPG'])) {
-    if (!isset($object['PNG'])) {
+    if (!isset($object['SCREENSHOT'])) {
       return array(
         'success' => FALSE,
         'messages' => array(
@@ -98,7 +98,7 @@ function islandora_web_archive_create_JPG_derivative(AbstractObject $object, $fo
  */
 function islandora_web_archive_create_TN_derivative(AbstractObject $object, $force = TRUE) {
   if ($force || !isset($object['TN'])) {
-    if (!isset($object['PNG'])) {
+    if (!isset($object['SCREENSHOT'])) {
       return array(
         'success' => FALSE,
         'messages' => array(
