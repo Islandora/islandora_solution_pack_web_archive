@@ -87,7 +87,7 @@ function islandora_web_archive_preprocess_islandora_web_archive(array &$variable
     );
     $variables['islandora_medium_img'] = theme('image', $params);
     if (isset($medium_size_url)) {
-      $variables['islandora_content'] = l($variables['islandora_medium_img'], $png_url, array('html' => TRUE));
+      $variables['islandora_content'] = l($variables['islandora_medium_img'], $medium_size_url, array('html' => TRUE));
     }
     else {
       $variables['islandora_content'] = $variables['islandora_medium_img'];
