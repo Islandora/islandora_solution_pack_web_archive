@@ -173,8 +173,6 @@ function islandora_web_archive_imagemagick_convert($src, $dest, $args) {
       '@command' => $command,
       '@output' => $output,
     );
-    debug($ret);
-    debug($output);
     watchdog('islandora_web_archive', "@message  @variables", WATCHDOG_ERROR);
     return FALSE;
   }
