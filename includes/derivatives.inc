@@ -41,12 +41,12 @@ function islandora_web_archive_get_uploaded_screenshot(AbstractObject $object, $
  */
 function islandora_web_archive_create_JPG_derivative(AbstractObject $object, $force = TRUE) {
   if ($force || !isset($object['JPG'])) {
-    if (!isset($object['PNG'])) {
+    if (!isset($object['SCREENSHOT'])) {
       return array(
         'success' => FALSE,
         'messages' => array(
           array(
-            'message' => t('No PNG datastream present for object @pid - JPG creation was skipped.'),
+            'message' => t('No SCREENSHOT datastream present for object @pid - JPG creation was skipped.'),
             'message_sub' => array('@pid' => $object->id),
             'type' => 'watchdog',
             'severity' => WATCHDOG_ERROR,
@@ -98,12 +98,12 @@ function islandora_web_archive_create_JPG_derivative(AbstractObject $object, $fo
  */
 function islandora_web_archive_create_TN_derivative(AbstractObject $object, $force = TRUE) {
   if ($force || !isset($object['TN'])) {
-    if (!isset($object['PNG'])) {
+    if (!isset($object['SCREENSHOT'])) {
       return array(
         'success' => FALSE,
         'messages' => array(
           array(
-            'message' => t('No PNG datastream present for object @pid - TN creation was skipped.'),
+            'message' => t('No SCREENSHOT datastream present for object @pid - TN creation was skipped.'),
             'message_sub' => array('@pid' => $object->id),
             'type' => 'watchdog',
             'severity' => WATCHDOG_ERROR,
@@ -153,7 +153,7 @@ function islandora_web_archive_create_TN_derivative(AbstractObject $object, $for
  *   The destination file path if successful otherwise FALSE.
  */
 function islandora_web_archive_imagemagick_convert($src, $dest, $args) {
-  $src = drupal_realpath($src) . '[0]';
+  $src = drupal_realpath($src);
   $dest = drupal_realpath($dest);
   $context = array(
     'source' => $src,

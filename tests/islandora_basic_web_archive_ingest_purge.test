@@ -5,6 +5,26 @@
  * Attempts to ingest warc into a randomly generated web archive collection
  */
 
+/**
+ * Naive checking of WARC_FILTERED and WARC_CSV.
+ */
+class WARCDerivativeDatastreamValidator extends DatastreamValidator {
+
+  /**
+   * Check WARC_FILTERED and WARC_CSV for content.
+   *
+   * If the WARC_FILTERED or WARC_CSV derivation fails, an empty datastream is
+   * generated, so we can at least validate here that they create something.
+   */
+  protected function assertContent() {
+    $assertion = strlen($this->datastreamContent) > 0;
+    $pass = "Datastream {$this->datastream} has content.";
+    $fail = "Datastream {$this->datastream} is an empty file.";
+    $message = $assertion ? $pass : $fail;
+    $this->addResult($assertion, $message);
+  }
+}
+
 class IslandoraWebArchiveIngestTestCase extends IslandoraCollectionWebTestCase {
 
   /**
@@ -26,11 +46,20 @@ class IslandoraWebArchiveIngestTestCase extends IslandoraCollectionWebTestCase {
    * @see IslandoraWebTestCase::setUp()
    */
   public function setUp() {
+    $this->executables = array(
+      'islandora_web_archive_warcfilter_path' => variable_get('islandora_web_archive_warcfilter_path', '/usr/local/bin/warcfilter'),
+      'islandora_web_archive_warcindex_path' => variable_get('islandora_web_archive_warcindex_path', '/usr/local/bin/warcindex'),
+      'image_toolkit' => variable_get('image_toolkit', 'imagemagick'),
+      'imagemagick_convert' => variable_get('imagemagick_convert', '/usr/bin/convert'),
+    );
     parent::setUp(array(
       'islandora',
       'islandora_web_archive',
       'islandora_basic_collection',
     ));
+    foreach ($this->executables as $variable => $value) {
+      variable_set($variable, $value);
+    }
   }
 
   /**
@@ -55,12 +84,16 @@ class IslandoraWebArchiveIngestTestCase extends IslandoraCollectionWebTestCase {
     // Attempts to create an object.
     $path = 'islandora/object/' . $collectionpid . '/manage/overview/ingest';
     $edit = array();
-    $file = drupal_get_path('module', 'islandora_web_archive') . '/tests/fixtures/test.warc';
-    $edit['files[file]'] = $file;
+    $fixtures_path = drupal_get_path('module', 'islandora_web_archive') . '/tests/fixtures';
+    $edit['files[warc_file]'] = "$fixtures_path/test.warc";
+    $edit['upload_screenshot'] = TRUE;
+    $edit['files[screenshot_file]'] = "$fixtures_path/test.jpg";
+    $edit['upload_pdf'] = TRUE;
+    $edit['files[pdf_file]'] = "$fixtures_path/test.pdf";
     $this->drupalPost($path, $edit, t('Ingest'));
     $this->assertText('New Object', 'WARC object was created', 'Islandora');
     $path = $this->url;
-    $warcpath = $path . '/datastream/OBJ/view';
+    $warcpath = $path . '/datastream/OBJ/New%20Object.warc';
     $this->assertLinkByHref($warcpath, 0, t('Ingested warc found on view page'), t('Islandora'));
 
     // Determines whether or not the appropriate datastreams were created.
@@ -76,13 +109,13 @@ class IslandoraWebArchiveIngestTestCase extends IslandoraCollectionWebTestCase {
       'WARC_FILTERED',
     );
     $this->assertDatastreams($object, $datastreams);
-    // @TODO: This is commented out for now as this assert function does not
-    // exist as of current. However, the web archive tests need to be updated
-    // so the slew of QA Dan's test can be merged.
-    // $this->assertImageDatastreams($object, $datastreams)
-    //
-    // Attempts to delete the object and then collection.
-    $this->deleteObject($object->id);
-    $this->deleteTestCollection($collectionpid);
+    $datastreams = array(
+      array('TN', 'image'),
+      array('JPG', 'image'),
+      array('PDF', 'PDF'),
+      array('WARC_CSV', 'WARCDerivative'),
+      array('WARC_FILTERED', 'WARCDerivative'),
+    );
+    $this->validateDatastreams($object, $datastreams);
   }
 }
