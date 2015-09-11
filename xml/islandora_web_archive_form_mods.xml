@@ -1062,7 +1062,7 @@
                       <value>url</value>
                     </create>
                     <read>
-                      <path>mods:url[1]</path>
+                      <path>mods:url</path>
                       <context>parent</context>
                     </read>
                     <update>
