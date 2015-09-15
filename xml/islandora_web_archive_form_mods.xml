@@ -104,6 +104,13 @@
             <properties>
               <type>textfield</type>
               <access>TRUE</access>
+              <collapsed>FALSE</collapsed>
+              <collapsible>FALSE</collapsible>
+              <disabled>FALSE</disabled>
+              <executes_submit_callback>FALSE</executes_submit_callback>
+              <multiple>FALSE</multiple>
+              <required>FALSE</required>
+              <resizable>FALSE</resizable>
               <title>Sub Title</title>
               <tree>TRUE</tree>
               <actions>
@@ -134,6 +141,13 @@
         <properties>
           <type>tabs</type>
           <access>TRUE</access>
+          <collapsed>FALSE</collapsed>
+          <collapsible>FALSE</collapsible>
+          <disabled>FALSE</disabled>
+          <executes_submit_callback>FALSE</executes_submit_callback>
+          <multiple>FALSE</multiple>
+          <required>FALSE</required>
+          <resizable>FALSE</resizable>
           <title>Name</title>
           <tree>TRUE</tree>
         </properties>
@@ -142,6 +156,13 @@
             <properties>
               <type>tabpanel</type>
               <access>TRUE</access>
+              <collapsed>FALSE</collapsed>
+              <collapsible>FALSE</collapsible>
+              <disabled>FALSE</disabled>
+              <executes_submit_callback>FALSE</executes_submit_callback>
+              <multiple>FALSE</multiple>
+              <required>FALSE</required>
+              <resizable>FALSE</resizable>
               <tree>TRUE</tree>
               <actions>
                 <create>
@@ -165,11 +186,18 @@
                 <properties>
                   <type>select</type>
                   <access>TRUE</access>
+                  <collapsed>FALSE</collapsed>
+                  <collapsible>FALSE</collapsible>
                   <default_value>corporate</default_value>
+                  <disabled>FALSE</disabled>
+                  <executes_submit_callback>FALSE</executes_submit_callback>
+                  <multiple>FALSE</multiple>
                   <options>
                     <corporate>corporate</corporate>
                     <personal>personal</personal>
                   </options>
+                  <required>FALSE</required>
+                  <resizable>FALSE</resizable>
                   <title>Type</title>
                   <tree>TRUE</tree>
                   <actions>
@@ -198,6 +226,13 @@
                 <properties>
                   <type>textfield</type>
                   <access>TRUE</access>
+                  <collapsed>FALSE</collapsed>
+                  <collapsible>FALSE</collapsible>
+                  <disabled>FALSE</disabled>
+                  <executes_submit_callback>FALSE</executes_submit_callback>
+                  <multiple>FALSE</multiple>
+                  <required>FALSE</required>
+                  <resizable>FALSE</resizable>
                   <title>Name</title>
                   <tree>TRUE</tree>
                   <actions>
@@ -229,10 +264,17 @@
                 <properties>
                   <type>textfield</type>
                   <access>TRUE</access>
+                  <collapsed>FALSE</collapsed>
+                  <collapsible>FALSE</collapsible>
                   <description>Select a role from this vocabulary -
                                         http://id.loc.gov/vocabulary/relators.html - e.g. Artist,
                                         Creator, Designer, Engraver, Illustrator, Photographer,
                                         Printmaker, etc.</description>
+                  <disabled>FALSE</disabled>
+                  <executes_submit_callback>FALSE</executes_submit_callback>
+                  <multiple>FALSE</multiple>
+                  <required>FALSE</required>
+                  <resizable>FALSE</resizable>
                   <title>Role</title>
                   <tree>TRUE</tree>
                   <actions>
@@ -351,6 +393,13 @@
         <properties>
           <type>fieldset</type>
           <access>TRUE</access>
+          <collapsed>FALSE</collapsed>
+          <collapsible>FALSE</collapsible>
+          <disabled>FALSE</disabled>
+          <executes_submit_callback>FALSE</executes_submit_callback>
+          <multiple>FALSE</multiple>
+          <required>FALSE</required>
+          <resizable>FALSE</resizable>
           <title>Origin Information</title>
           <tree>TRUE</tree>
           <actions>
@@ -411,6 +460,13 @@
             <properties>
               <type>textfield</type>
               <access>TRUE</access>
+              <collapsed>FALSE</collapsed>
+              <collapsible>FALSE</collapsible>
+              <disabled>FALSE</disabled>
+              <executes_submit_callback>FALSE</executes_submit_callback>
+              <multiple>FALSE</multiple>
+              <required>FALSE</required>
+              <resizable>FALSE</resizable>
               <title>Publisher</title>
               <tree>TRUE</tree>
               <actions>
@@ -439,6 +495,13 @@
             <properties>
               <type>textfield</type>
               <access>TRUE</access>
+              <collapsed>FALSE</collapsed>
+              <collapsible>FALSE</collapsible>
+              <disabled>FALSE</disabled>
+              <executes_submit_callback>FALSE</executes_submit_callback>
+              <multiple>FALSE</multiple>
+              <required>FALSE</required>
+              <resizable>FALSE</resizable>
               <title>Country</title>
               <tree>TRUE</tree>
               <actions>
@@ -468,6 +531,13 @@
             <properties>
               <type>textfield</type>
               <access>TRUE</access>
+              <collapsed>FALSE</collapsed>
+              <collapsible>FALSE</collapsible>
+              <disabled>FALSE</disabled>
+              <executes_submit_callback>FALSE</executes_submit_callback>
+              <multiple>FALSE</multiple>
+              <required>FALSE</required>
+              <resizable>FALSE</resizable>
               <title>Place</title>
               <tree>TRUE</tree>
               <actions>
@@ -499,9 +569,16 @@
         <properties>
           <type>textfield</type>
           <access>TRUE</access>
+          <collapsed>FALSE</collapsed>
+          <collapsible>FALSE</collapsible>
           <description>Select a three letter iso639-2b language code from &lt;a
                         href="http://www.loc.gov/standards/iso639-2/php/code_list.php"
                         target="_blank"&gt;http://www.loc.gov/standards/iso639-2/php/code_list.php&lt;/a&gt;</description>
+          <disabled>FALSE</disabled>
+          <executes_submit_callback>FALSE</executes_submit_callback>
+          <multiple>FALSE</multiple>
+          <required>FALSE</required>
+          <resizable>FALSE</resizable>
           <title>Language</title>
           <tree>TRUE</tree>
           <actions>
@@ -534,6 +611,13 @@
         <properties>
           <type>textarea</type>
           <access>TRUE</access>
+          <collapsed>FALSE</collapsed>
+          <collapsible>FALSE</collapsible>
+          <disabled>FALSE</disabled>
+          <executes_submit_callback>FALSE</executes_submit_callback>
+          <multiple>FALSE</multiple>
+          <required>FALSE</required>
+          <resizable>FALSE</resizable>
           <title>Description</title>
           <tree>TRUE</tree>
           <actions>
@@ -628,10 +712,15 @@
             <properties>
               <type>select</type>
               <access>TRUE</access>
+              <collapsed>FALSE</collapsed>
+              <collapsible>FALSE</collapsible>
               <default_value>electronic resource</default_value>
               <description>A designation of a particular physical presentation of a
                                 resource, including the physical form or medium of material for a
                                 resource.</description>
+              <disabled>FALSE</disabled>
+              <executes_submit_callback>FALSE</executes_submit_callback>
+              <multiple>FALSE</multiple>
               <options>
                 <videorecording>videorecording</videorecording>
                 <unspecified>unspecified</unspecified>
@@ -649,6 +738,8 @@
                 <globe>globe</globe>
                 <index key="electronic resource">electronic resource</index>
               </options>
+              <required>FALSE</required>
+              <resizable>FALSE</resizable>
               <title>Form</title>
               <tree>TRUE</tree>
               <actions>
@@ -770,6 +861,13 @@
         <properties>
           <type>textarea</type>
           <access>TRUE</access>
+          <collapsed>FALSE</collapsed>
+          <collapsible>FALSE</collapsible>
+          <disabled>FALSE</disabled>
+          <executes_submit_callback>FALSE</executes_submit_callback>
+          <multiple>FALSE</multiple>
+          <required>FALSE</required>
+          <resizable>FALSE</resizable>
           <title>Note</title>
           <tree>TRUE</tree>
           <actions>
@@ -845,19 +943,25 @@
               <tree>TRUE</tree>
               <actions>
                 <create>
-                  <path>/mods:mods</path>
-                  <context>document</context>
+                  <path>self::node()</path>
+                  <context>parent</context>
                   <schema/>
                   <type>element</type>
                   <prefix>NULL</prefix>
                   <value>titleInfo</value>
                 </create>
                 <read>
-                  <path>/mods:mods/mods:titleInfo</path>
-                  <context>document</context>
+                  <path>mods:titleInfo</path>
+                  <context>parent</context>
                 </read>
-                <update>NULL</update>
-                <delete>NULL</delete>
+                <update>
+                  <path>self::node()</path>
+                  <context>self</context>
+                </update>
+                <delete>
+                  <path>self::node()</path>
+                  <context>self</context>
+                </delete>
               </actions>
             </properties>
             <children>
@@ -867,7 +971,6 @@
                   <access>TRUE</access>
                   <collapsed>FALSE</collapsed>
                   <collapsible>FALSE</collapsible>
-                  <description>ex: YFile</description>
                   <disabled>FALSE</disabled>
                   <executes_submit_callback>FALSE</executes_submit_callback>
                   <multiple>FALSE</multiple>
@@ -960,7 +1063,7 @@
                     </create>
                     <read>
                       <path>mods:url</path>
-                      <context>document</context>
+                      <context>parent</context>
                     </read>
                     <update>
                       <path>self::node()</path>
@@ -1099,6 +1202,13 @@
         <properties>
           <type>fieldset</type>
           <access>TRUE</access>
+          <collapsed>FALSE</collapsed>
+          <collapsible>FALSE</collapsible>
+          <disabled>FALSE</disabled>
+          <executes_submit_callback>FALSE</executes_submit_callback>
+          <multiple>FALSE</multiple>
+          <required>FALSE</required>
+          <resizable>FALSE</resizable>
           <title>Subject</title>
           <tree>TRUE</tree>
           <actions>
@@ -1138,6 +1248,13 @@
                 <properties>
                   <type>tag</type>
                   <access>TRUE</access>
+                  <collapsed>FALSE</collapsed>
+                  <collapsible>FALSE</collapsible>
+                  <disabled>FALSE</disabled>
+                  <executes_submit_callback>FALSE</executes_submit_callback>
+                  <multiple>FALSE</multiple>
+                  <required>FALSE</required>
+                  <resizable>FALSE</resizable>
                   <tree>TRUE</tree>
                   <actions>
                     <create>
@@ -1170,20 +1287,28 @@
             <properties>
               <type>tags</type>
               <access>TRUE</access>
+              <collapsed>FALSE</collapsed>
+              <collapsible>FALSE</collapsible>
+              <disabled>FALSE</disabled>
+              <executes_submit_callback>FALSE</executes_submit_callback>
+              <multiple>FALSE</multiple>
+              <required>FALSE</required>
+              <resizable>FALSE</resizable>
               <title>Geographic</title>
               <tree>TRUE</tree>
-              <actions>
-                <create>NULL</create>
-                <read>NULL</read>
-                <update>NULL</update>
-                <delete>NULL</delete>
-              </actions>
             </properties>
             <children>
               <element name="0">
                 <properties>
                   <type>tag</type>
                   <access>TRUE</access>
+                  <collapsed>FALSE</collapsed>
+                  <collapsible>FALSE</collapsible>
+                  <disabled>FALSE</disabled>
+                  <executes_submit_callback>FALSE</executes_submit_callback>
+                  <multiple>FALSE</multiple>
+                  <required>FALSE</required>
+                  <resizable>FALSE</resizable>
                   <tree>TRUE</tree>
                   <actions>
                     <create>
@@ -1216,6 +1341,13 @@
             <properties>
               <type>tags</type>
               <access>TRUE</access>
+              <collapsed>FALSE</collapsed>
+              <collapsible>FALSE</collapsible>
+              <disabled>FALSE</disabled>
+              <executes_submit_callback>FALSE</executes_submit_callback>
+              <multiple>FALSE</multiple>
+              <required>FALSE</required>
+              <resizable>FALSE</resizable>
               <title>Temporal</title>
               <tree>TRUE</tree>
             </properties>
@@ -1224,6 +1356,13 @@
                 <properties>
                   <type>tag</type>
                   <access>TRUE</access>
+                  <collapsed>FALSE</collapsed>
+                  <collapsible>FALSE</collapsible>
+                  <disabled>FALSE</disabled>
+                  <executes_submit_callback>FALSE</executes_submit_callback>
+                  <multiple>FALSE</multiple>
+                  <required>FALSE</required>
+                  <resizable>FALSE</resizable>
                   <tree>TRUE</tree>
                   <actions>
                     <create>
