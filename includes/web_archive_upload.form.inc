@@ -108,20 +108,19 @@ function islandora_web_archive_upload_form_validate(array $form, array &$form_st
  *   An array containing the Drupal form state.
  */
 function islandora_web_archive_upload_form_submit(array $form, array &$form_state) {
-  $objects = &islandora_ingest_form_get_objects($form_state);
-  foreach ($objects as $object) {
-    if (empty($object['OBJ'])) {
-      $warc_ds = $object->constructDatastream('OBJ', 'M');
-      $object->ingestDatastream($warc_ds);
-    }
-    else {
-      $warc_ds = $object['OBJ'];
-    }
-    $warc_file = file_load($form_state['values']['warc_file']);
-    $warc_ds->setContentFromFile($warc_file->uri, FALSE);
-    $warc_ds->label = $warc_file->filename;
-    $warc_ds->mimetype = $warc_file->filemime;
+  $object = islandora_ingest_form_get_object($form_state);
+  if (empty($object['OBJ'])) {
+    $warc_ds = $object->constructDatastream('OBJ', 'M');
+    $object->ingestDatastream($warc_ds);
   }
+  else {
+    $warc_ds = $object['OBJ'];
+  }
+  $warc_file = file_load($form_state['values']['warc_file']);
+  $warc_ds->setContentFromFile($warc_file->uri, FALSE);
+  $warc_ds->label = $warc_file->filename;
+  $warc_ds->mimetype = $warc_file->filemime;
+
   // See if there's an attached screenshot image to process.
   if ($form_state['values']['upload_screenshot']) {
     if (empty($object['SCREENSHOT'])) {
