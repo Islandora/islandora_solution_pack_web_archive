@@ -19,10 +19,11 @@
 function islandora_web_archive_upload_form(array $form, array &$form_state) {
   $upload_size = min((int) ini_get('post_max_size'), (int) ini_get('upload_max_filesize'));
   $extensions = array('warc');
+  $upload_required = variable_get('islandora_require_obj_upload', TRUE);
   $form['warc_file'] = array(
     '#title' => t('Warc'),
     '#type' => 'managed_file',
-    '#required' => TRUE,
+    '#required' => $upload_required,
     '#description' => t('Select warc to upload.<br/>Files must be less than <strong>@size MB.</strong><br/>Allowed file types: <strong>@ext.</strong>', array('@size' => $upload_size, '@ext' => $extensions[0])),
     '#default_value' => isset($form_state['values']['warc_file']) ? $form_state['values']['warc_file'] : NULL,
     '#upload_location' => 'temporary://',
@@ -109,17 +110,19 @@ function islandora_web_archive_upload_form_validate(array $form, array &$form_st
  */
 function islandora_web_archive_upload_form_submit(array $form, array &$form_state) {
   $object = islandora_ingest_form_get_object($form_state);
-  if (empty($object['OBJ'])) {
-    $warc_ds = $object->constructDatastream('OBJ', 'M');
-    $object->ingestDatastream($warc_ds);
+  if ($form_state['values']['warc_file']) {
+    if (empty($object['OBJ'])) {
+      $warc_ds = $object->constructDatastream('OBJ', 'M');
+      $object->ingestDatastream($warc_ds);
+    }
+    else {
+      $warc_ds = $object['OBJ'];
+    }
+    $warc_file = file_load($form_state['values']['warc_file']);
+    $warc_ds->setContentFromFile($warc_file->uri, FALSE);
+    $warc_ds->label = $warc_file->filename;
+    $warc_ds->mimetype = $warc_file->filemime;
   }
-  else {
-    $warc_ds = $object['OBJ'];
-  }
-  $warc_file = file_load($form_state['values']['warc_file']);
-  $warc_ds->setContentFromFile($warc_file->uri, FALSE);
-  $warc_ds->label = $warc_file->filename;
-  $warc_ds->mimetype = $warc_file->filemime;
 
   // See if there's an attached screenshot image to process.
   if ($form_state['values']['upload_screenshot']) {

@@ -12,7 +12,7 @@
   <dsTypeModel ID="MODS" optional="true">
     <form FORMAT_URI="http://www.loc.gov/mods/v3" MIME="application/xml"/>
   </dsTypeModel>
-  <dsTypeModel ID="OBJ" optional="false">
+  <dsTypeModel ID="OBJ" optional="true">
     <form MIME="application/warc"/>
     <form MIME="application/octet-stream"/>
   </dsTypeModel>
