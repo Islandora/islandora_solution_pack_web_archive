@@ -41,6 +41,8 @@ A. Yes. If you are using Solr 4+, the `WARC_FILTERED` datastream will automatica
 
 ## Maintainers
 
+* Maintainer needed
+
 ## Development
 
 If you would like to contribute to this module, please check out [CONTRIBUTING.md](CONTRIBUTING.md). In addition, we have helpful [Documentation for Developers](https://github.com/Islandora/islandora/wiki#wiki-documentation-for-developers) info, as well as our [Developers](http://islandora.ca/developers) section on the [Islandora.ca](http://islandora.ca) site.
