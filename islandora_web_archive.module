@@ -86,9 +86,9 @@ function islandora_web_archive_islandora_required_objects(IslandoraTuque $connec
 }
 
 /**
- * Implements hook_islandora_xml_form_builder_forms().
+ * Implements hook_xml_form_builder_forms().
  */
-function islandora_web_archive_islandora_xml_form_builder_forms() {
+function islandora_web_archive_xml_form_builder_forms() {
   $module_path = drupal_get_path('module', 'islandora_web_archive');
   return array(
     'Web ARChive MODS form' => array(
@@ -98,9 +98,9 @@ function islandora_web_archive_islandora_xml_form_builder_forms() {
 }
 
 /**
- * Implements hook_islandora_xml_form_builder_form_associations().
+ * Implements hook_xml_form_builder_form_associations().
  */
-function islandora_web_archive_islandora_xml_form_builder_form_associations() {
+function islandora_web_archive_xml_form_builder_form_associations() {
   return array(
     'islandora_web_archive_mods_form' => array(
       'content_model' => 'islandora:sp_web_archive',
