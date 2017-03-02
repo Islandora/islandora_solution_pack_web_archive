@@ -32,6 +32,6 @@ script:
   - $ISLANDORA_DIR/tests/scripts/line_endings.sh sites/all/modules/islandora_solution_pack_web_archive
   - drush coder-review --reviews=production,security,style,i18n,potx,sniffer islandora_web_archive
   - phpcpd --names *.module,*.inc,*.test sites/all/modules/islandora_solution_pack_web_archive
-  - drush test-run --uri=http://localhost:8081 "Islandora Web Archive"
+  - php scripts/run-tests.sh --php `phpenv which php` --url http://localhost:8081 --verbose "Islandora Web Archive"
 notifications:
   irc: "irc.freenode.org#islandora"
