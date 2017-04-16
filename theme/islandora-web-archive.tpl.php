@@ -9,6 +9,7 @@
 
 <div class="islandora-web-archive-object islandora">
   <div class="islandora-web-archive-content-wrapper clearfix">
+    <?php print theme('islandora_solr_search_return_link'); ?>
     <?php if (isset($islandora_content)): ?>
       <div class="islandora-web-archive-content">
         <?php print $islandora_content; ?>
