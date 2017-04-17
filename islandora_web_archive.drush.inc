@@ -55,6 +55,7 @@ function islandora_web_archive_migrate_png_to_screenshot_operation($limit, &$con
   $sandbox =& $context['sandbox'];
   drupal_static_reset('islandora_get_tuque_connection');
   $tuque = islandora_get_tuque_connection();
+  drupal_static_reset('islandora_get_tuque_connection');
   // Get all islandora web archive objects.
   $query = <<<EOQ
 SELECT ?object ?created
