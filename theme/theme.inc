@@ -6,9 +6,9 @@
  */
 
 /**
- * Implements hook_preprocess().
+ * Implements template_preprocess_HOOK().
  */
-function islandora_web_archive_preprocess_islandora_web_archive(array &$variables) {
+function template_preprocess_islandora_web_archive(array &$variables) {
   module_load_include('inc', 'islandora', 'includes/datastream');
   module_load_include('inc', 'islandora', 'includes/utilities');
   module_load_include('inc', 'islandora', 'includes/solution_packs');
