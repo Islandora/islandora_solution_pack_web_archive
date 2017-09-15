@@ -41,7 +41,7 @@ A. Yes. If you are using Solr 4+, the `WARC_FILTERED` datastream will automatica
 
 ## Maintainers
 
-* [Daniel Lamb](https://github.com/dannylamb)
+* [Daniel Aitken](https://github.com/qadan)
 
 ## Development
 
