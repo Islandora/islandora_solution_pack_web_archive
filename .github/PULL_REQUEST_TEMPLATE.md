@@ -37,4 +37,3 @@ Example:
 
 # Interested parties
 Tag (@ mention) interested parties or, if unsure, @Islandora/7-x-1-x-committers
-
